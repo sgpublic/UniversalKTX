@@ -3,6 +3,7 @@ package io.github.sgpublic.kotlin.core.util
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import java.lang.reflect.Type
 import kotlin.reflect.KClass
 
@@ -31,3 +32,8 @@ fun Any?.toGson(): String {
 }
 
 class GsonException(message: String? = null): Exception(message ?: "对象序列化失败")
+
+fun JsonObject.getBoolean(name: String, def: Boolean = false): Boolean {
+    return get(name)?.takeIf { it.isJsonPrimitive }
+        ?.asBoolean ?: def
+}
