@@ -11,7 +11,8 @@ import io.github.sgpublic.android.databinding.ActivityRecyclerBinding
  * @author Madray Haven
  * @date 2022/11/9 10:55
  */
-abstract class BaseRecyclerActivity<ItemT, ViewT: ViewBinding, VM: ViewModel>: BaseViewModelActivity<ActivityRecyclerBinding, VM>() {
+abstract class RecyclerActivity<ItemT, ViewT: ViewBinding, VM: ViewModel>:
+    BaseViewModelActivity<ActivityRecyclerBinding, VM>() {
     @CallSuper
     override fun onViewSetup() {
         ViewBinding.recyclerOrigin.adapter = Adapter
