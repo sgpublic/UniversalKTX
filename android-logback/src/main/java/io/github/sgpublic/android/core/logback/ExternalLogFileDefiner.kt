@@ -1,7 +1,7 @@
-package com.paradise.prison.core.logback
+package io.github.sgpublic.android.core.logback
 
 import ch.qos.logback.core.PropertyDefinerBase
-import com.paradise.prison.Application
+import io.github.sgpublic.android.Application
 import java.io.File
 import java.io.IOException
 

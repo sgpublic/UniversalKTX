@@ -1,4 +1,4 @@
-package com.paradise.prison.core.logback
+package io.github.sgpublic.android.core.logback
 
 import ch.qos.logback.classic.pattern.ClassicConverter
 import ch.qos.logback.classic.spi.ILoggingEvent

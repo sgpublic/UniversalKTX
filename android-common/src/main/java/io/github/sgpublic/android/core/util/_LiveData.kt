@@ -14,8 +14,8 @@ import kotlinx.coroutines.withContext
  */
 fun <T> MutableLiveData<T>.newObserve(owner: LifecycleOwner, observer: (T) -> Unit) {
     observe(owner, object : Observer<T> {
-        override fun onChanged(t: T) {
-            observer(t)
+        override fun onChanged(value: T) {
+            observer(value)
         }
     })
 }

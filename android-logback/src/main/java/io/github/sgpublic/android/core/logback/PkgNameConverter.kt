@@ -1,14 +1,15 @@
-package com.paradise.prison.core.logback
+package io.github.sgpublic.android.core.logback
 
 import ch.qos.logback.classic.pattern.ClassicConverter
 import ch.qos.logback.classic.spi.ILoggingEvent
-import com.paradise.prison.BuildConfig
+import io.github.sgpublic.android.Application
+import io.github.sgpublic.android.BuildConfig
 
 class PkgNameConverter : ClassicConverter() {
     override fun convert(event: ILoggingEvent): String {
         var loggerName = event.loggerName
-        if (loggerName.startsWith(BuildConfig.APPLICATION_ID)) {
-            loggerName = loggerName.substring(BuildConfig.APPLICATION_ID.length)
+        if (loggerName.startsWith(Application.ApplicationContext.packageName)) {
+            loggerName = loggerName.substring(Application.ApplicationContext.packageName.length)
         }
         return loggerName
     }

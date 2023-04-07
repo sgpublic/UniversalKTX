@@ -1,12 +1,10 @@
-package com.paradise.prison.core.logback
+package io.github.sgpublic.android.core.logback
 
-import android.view.View
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.filter.Filter
 import ch.qos.logback.core.spi.FilterReply
-import com.paradise.prison.core.util.take
-import com.paradise.prison.core.util.take
+import io.github.sgpublic.kotlin.core.util.take
 
 open class AutoLevelFilter @JvmOverloads constructor(
     private var level: Level = Level.INFO

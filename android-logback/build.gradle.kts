@@ -1,6 +1,10 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    kotlin("android")
+
+    id("maven-publish")
+    id("signing")
+    id("android-publish")
 }
 
 android {
@@ -9,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -25,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
@@ -40,11 +43,11 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation(kotlin("reflect"))
 
     implementation(project(":android-common"))
+    implementation(project(":kotlin-common"))
 
-    implementation("org.slf4j:slf4j-api:2.0.7")
+    api(project(":kotlin-logback"))
     // 适用于 Android 的 logback：
     // https://github.com/tony19/logback-android
     // 配置文件位于 /assets/logback.xml

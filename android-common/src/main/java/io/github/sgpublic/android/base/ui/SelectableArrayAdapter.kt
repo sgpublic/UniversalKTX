@@ -3,8 +3,6 @@ package io.github.sgpublic.android.base.ui
 import androidx.annotation.CallSuper
 import androidx.annotation.ColorRes
 import androidx.viewbinding.ViewBinding
-import io.github.sgpublic.android.R
-import io.github.sgpublic.android.core.util.log
 
 abstract class SelectableArrayAdapter<VB: ViewBinding, ItemT: Any> : ArrayRecyclerAdapter<VB, ItemT>() {
     open fun getItemPosition(id: Long) = 0
@@ -27,9 +25,9 @@ interface SingleSelection<ItemT: Any> {
     fun getSelectedItem() = Adapter.getItem(getSelection())
 
     @ColorRes
-    fun getSelectedColor(): Int = R.color.colorPrimary
+    fun getSelectedColor(): Int
     @ColorRes
-    fun getNormalColor(): Int = R.color.colorOnPrimary
+    fun getNormalColor(): Int
     
     val Adapter: SelectableArrayAdapter<*, ItemT>
 }
@@ -85,7 +83,6 @@ interface MultiSelectable<ItemT: Any> {
 
     fun exitSelectMode(): List<ItemT> {
         if (!selectMode) {
-            log.warn("not in select mode")
             return emptyList()
         }
         selectMode = false

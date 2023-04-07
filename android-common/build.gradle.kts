@@ -1,6 +1,10 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+
+    id("maven-publish")
+    id("signing")
+    id("android-publish")
 }
 
 android {
@@ -9,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,7 +31,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
@@ -41,6 +44,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation(project(":kotlin-common"))
+    implementation(project(":kotlin-logback"))
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.databinding:viewbinding:7.4.2")

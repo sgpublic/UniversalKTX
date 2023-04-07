@@ -2,8 +2,8 @@ package io.github.sgpublic.android
 
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.joran.JoranConfigurator
-import com.paradise.prison.core.logback.PkgNameConverter
-import com.paradise.prison.core.logback.TraceConverter
+import io.github.sgpublic.android.core.logback.PkgNameConverter
+import io.github.sgpublic.android.core.logback.TraceConverter
 import ch.qos.logback.core.util.StatusPrinter
 
 /**
@@ -19,7 +19,7 @@ fun Application.loadLogbackConfig() {
     configurator.context = context
     context.reset()
     try {
-        configurator.doConfigure(resources.assets.open("logback-bilidl.xml"))
+        configurator.doConfigure(resources.assets.open("logback.xml"))
         if (BuildConfig.DEBUG) {
             StatusPrinter.printIfErrorsOccured(context)
         }

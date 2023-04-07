@@ -1,6 +1,10 @@
 plugins {
     id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    kotlin("jvm")
+
+    id("maven-publish")
+    id("signing")
+    id("java-publish")
 }
 
 java {
@@ -9,5 +13,6 @@ java {
 }
 
 dependencies {
+    /* https://github.com/google/gson */
     implementation("com.google.code.gson:gson:2.10.1")
 }

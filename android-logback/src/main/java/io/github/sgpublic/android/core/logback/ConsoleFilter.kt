@@ -1,8 +1,8 @@
-package com.paradise.prison.core.logback
+package io.github.sgpublic.android.core.logback
 
 import ch.qos.logback.classic.Level
-import com.paradise.prison.BuildConfig
-import com.paradise.prison.core.util.take
+import io.github.sgpublic.android.BuildConfig
+import io.github.sgpublic.kotlin.core.util.take
 
 class ConsoleFilter: AutoLevelFilter(
     BuildConfig.DEBUG.take(Level.DEBUG, Level.INFO)

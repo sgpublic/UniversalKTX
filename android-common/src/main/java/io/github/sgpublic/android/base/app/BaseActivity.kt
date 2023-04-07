@@ -39,8 +39,6 @@ abstract class BaseActivity<VB : ViewBinding>: BaseCompatActivity() {
 
     protected open fun onViewSetup() { }
 
-    protected open fun isActivityAtBottom(): Boolean = false
-
     private var last: Long = -1
     @Suppress("OVERRIDE_DEPRECATION")
     override fun onBackPressed() {
@@ -49,7 +47,7 @@ abstract class BaseActivity<VB : ViewBinding>: BaseCompatActivity() {
                 return
             }
         }
-        if (!isActivityAtBottom()){
+        if (!isActivityAtBottom){
             @Suppress("DEPRECATION")
             super.onBackPressed()
             return

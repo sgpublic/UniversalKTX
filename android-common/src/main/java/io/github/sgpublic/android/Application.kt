@@ -1,35 +1,36 @@
 package io.github.sgpublic.android
 
 import android.app.Application
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.CallSuper
+import io.github.sgpublic.android.core.NotifyChannelEnum
+import io.github.sgpublic.android.core.util.BuildConfigWrapper
 import io.github.sgpublic.android.core.util.ContextResource
+import io.github.sgpublic.kotlin.util.log
 import java.lang.ref.WeakReference
 
-public class Application : Application() {
+abstract class Application : Application() {
+    @CallSuper
     override fun onCreate() {
         super.onCreate()
         context = WeakReference(this)
-        startListenException()
+        log.info("APP启动：${BuildConfigWrapper.VERSION_NAME}")
     }
 
-    private fun startListenException() {
-        Handler(mainLooper).post {
-            while (true) {
-                try {
-                    Looper.loop()
-                } catch (e: Throwable){
-                    throw e
-                }
-            }
-        }
+    override fun onTerminate() {
+        log.info("APP结束：${BuildConfigWrapper.VERSION_NAME}")
+        super.onTerminate()
     }
-
 
     companion object: ContextResource {
-        private val mHandler: Handler by lazy {
+        @JvmStatic
+        protected val mHandler: Handler by lazy {
             Handler(Looper.getMainLooper())
         }
         @JvmStatic
@@ -40,15 +41,7 @@ public class Application : Application() {
 
         private var context: WeakReference<Application>? = null
         override fun getContext(): Context = ApplicationContext
-        @JvmStatic
         val ApplicationContext: Context get() = this.context?.get()!!
-
-//        private val Database: AppDatabase by lazy {
-//            Room.databaseBuilder(this.ApplicationContext, RealAppDatabase::class.java, BuildConfig.PROJECT_NAME)
-//                .fallbackToDestructiveMigration()
-//                .allowMainThreadQueries()
-//                .build()
-//        }
 
         fun callTerminate() {
             this.context?.get()?.onTerminate()
@@ -59,4 +52,30 @@ public class Application : Application() {
         val SelectableItemBackground: Drawable
             get() = getDrawableAttr(android.R.attr.selectableItemBackground)
     }
+}
+
+fun Application.listenException() {
+    Handler(mainLooper).post {
+        while (true) {
+            try {
+                Looper.loop()
+            } catch (e: Throwable){
+                log.error("应用意外退出", e)
+                throw e
+            }
+        }
+    }
+}
+
+/**
+ * 初始化通知频道，系统语言更改时自动重新初始化，Android 8.0 以下没有通知频道功能不需要初始化
+ */
+fun <T: Enum<T>> io.github.sgpublic.android.Application.initNotifyChannel(enum: Class<T>) {
+    NotifyChannelEnum.realInit(Application, enum)
+    io.github.sgpublic.android.Application.ApplicationContext
+        .registerReceiver(object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            NotifyChannelEnum.realInit(Application, enum)
+        }
+    }, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
 }

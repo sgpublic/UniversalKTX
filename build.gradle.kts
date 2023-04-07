@@ -4,7 +4,7 @@ plugins {
     id("com.android.application") version androidVer apply false
     id("com.android.library") version androidVer apply false
 
-    val kotlinVer = "1.8.0"
+    val kotlinVer = "1.8.10"
     kotlin("android") version kotlinVer apply false
-    id("org.jetbrains.kotlin.jvm") version "1.8.0" apply false
+    kotlin("jvm") version kotlinVer apply false
 }
