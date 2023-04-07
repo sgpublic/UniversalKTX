@@ -4,7 +4,7 @@ plugins {
 
     id("maven-publish")
     id("signing")
-    id("java-publish")
+    id("io.github.sgpublic.java-publish")
 }
 
 java {
