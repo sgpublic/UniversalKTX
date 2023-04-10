@@ -14,5 +14,5 @@ java {
 
 dependencies {
     implementation(kotlin("reflect"))
-    api("org.slf4j:slf4j-api:2.0.7")
+    implementation("org.slf4j:slf4j-api:2.0.7")
 }
