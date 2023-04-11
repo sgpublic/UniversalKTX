@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":android-common"))
     implementation(project(":kotlin-common"))
 
+    implementation("org.slf4j:slf4j-api:2.0.7")
     api(project(":kotlin-logback"))
     // 适用于 Android 的 logback：
     // https://github.com/tony19/logback-android
