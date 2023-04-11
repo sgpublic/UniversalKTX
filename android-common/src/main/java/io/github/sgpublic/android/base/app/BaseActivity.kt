@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
 import com.yanzhenjie.sofia.Sofia
 import io.github.sgpublic.android.Application
-import io.github.sgpublic.android.R
+import io.github.sgpublic.android.common.R
 import io.github.sgpublic.android.core.util.Toast
 import io.github.sgpublic.android.core.util.finishAll
 import java.util.*
@@ -38,33 +38,6 @@ abstract class BaseActivity<VB : ViewBinding>: BaseCompatActivity() {
     }
 
     protected open fun onViewSetup() { }
-
-    private var last: Long = -1
-    @Suppress("OVERRIDE_DEPRECATION")
-    override fun onBackPressed() {
-        supportFragmentManager.fragments.forEach {
-            if (it is BaseFragment<*> && it.onBackPressed()) {
-                return
-            }
-        }
-        if (!isActivityAtBottom){
-            @Suppress("DEPRECATION")
-            super.onBackPressed()
-            return
-        }
-        val now = System.currentTimeMillis()
-        if (last < 0) {
-            Toast(R.string.text_back_exit)
-            last = now
-        } else {
-            if (now - last < 2000) {
-                Application.finishAll()
-            } else {
-                last = -1
-                Toast(R.string.text_back_exit_notice)
-            }
-        }
-    }
 
     protected inline fun <reified VB: ViewBinding> viewBinding(): Lazy<VB> = lazy {
         VB::class.java.getMethod("inflate", LayoutInflater::class.java)

@@ -7,17 +7,15 @@ import io.github.sgpublic.android.Application
  * @Date 2023/4/7 10:19
  */
 object BuildConfigWrapper {
-    private val _BuildConfig: Class<*> by lazy { 
-        Class.forName(Application.ApplicationContext.packageName)
-    }
+    var _BuildConfig: Class<*>? = null
     val APPLICATION_ID: String get() = _BuildConfig
-        .getDeclaredField("APPLICATION_ID")
-        .get(null)?.toString()!!
+        ?.getDeclaredField("APPLICATION_ID")
+        ?.get(null)?.toString()!!
     val VERSION_NAME: String get() = _BuildConfig
-        .getDeclaredField("VERSION_NAME")
-        .get(null)?.toString()!!
+        ?.getDeclaredField("VERSION_NAME")
+        ?.get(null)?.toString()!!
     val DEBUG: Boolean get() = _BuildConfig
-        .getDeclaredField("DEBUG")
-        .get(null)?.toString()!!
+        ?.getDeclaredField("DEBUG")
+        ?.get(null)?.toString()!!
         .toBoolean()
 }

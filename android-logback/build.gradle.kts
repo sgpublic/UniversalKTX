@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.sgpublic.android"
+    namespace = "io.github.sgpublic.android.logback"
     compileSdk = 33
 
     defaultConfig {

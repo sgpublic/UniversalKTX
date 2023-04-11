@@ -5,6 +5,7 @@ import ch.qos.logback.classic.joran.JoranConfigurator
 import io.github.sgpublic.android.core.logback.PkgNameConverter
 import io.github.sgpublic.android.core.logback.TraceConverter
 import ch.qos.logback.core.util.StatusPrinter
+import io.github.sgpublic.android.core.util.BuildConfigWrapper
 
 /**
  * @author Madray Haven
@@ -20,7 +21,7 @@ fun Application.loadLogbackConfig() {
     context.reset()
     try {
         configurator.doConfigure(resources.assets.open("logback.xml"))
-        if (BuildConfig.DEBUG) {
+        if (BuildConfigWrapper.DEBUG) {
             StatusPrinter.printIfErrorsOccured(context)
         }
     } catch (_: Exception) { }

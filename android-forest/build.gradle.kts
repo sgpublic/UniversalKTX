@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.sgpublic.android"
+    namespace = "io.github.sgpublic.android.forest"
     compileSdk = 33
 
     defaultConfig {

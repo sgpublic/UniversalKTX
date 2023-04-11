@@ -6,7 +6,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import io.github.sgpublic.android.Application
-import io.github.sgpublic.android.R
+import io.github.sgpublic.android.common.R
 import io.github.sgpublic.android.core.util.Toast
 import io.github.sgpublic.android.core.util.finishAll
 import io.github.sgpublic.android.core.util.register
