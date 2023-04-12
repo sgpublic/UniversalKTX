@@ -4,6 +4,7 @@ import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.android.base.app.BaseViewModelActivity
+import io.github.sgpublic.android.base.app.viewBinding
 import io.github.sgpublic.android.common.databinding.ActivityRecyclerBinding
 
 /**

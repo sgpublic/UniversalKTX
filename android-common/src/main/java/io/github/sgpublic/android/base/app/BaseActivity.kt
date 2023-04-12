@@ -28,19 +28,26 @@ abstract class BaseActivity<VB : ViewBinding>: BaseCompatActivity() {
 
     private fun setupContentView() {
         setContentView(ViewBinding.root)
-
-        Sofia.with(this)
-            .statusBarBackgroundAlpha(0)
-            .navigationBarBackgroundAlpha(0)
-            .invasionNavigationBar()
-            .invasionStatusBar()
-            .statusBarDarkFont()
+        if (applySofia) {
+            applySofia()
+        }
     }
+
+    protected open val applySofia: Boolean = true
 
     protected open fun onViewSetup() { }
+}
 
-    protected inline fun <reified VB: ViewBinding> viewBinding(): Lazy<VB> = lazy {
-        VB::class.java.getMethod("inflate", LayoutInflater::class.java)
-            .invoke(null, layoutInflater) as VB
-    }
+inline fun <reified VB: ViewBinding> BaseActivity<VB>.viewBinding(): Lazy<VB> = lazy {
+    VB::class.java.getMethod("inflate", LayoutInflater::class.java)
+        .invoke(null, layoutInflater) as VB
+}
+
+fun BaseActivity<*>.applySofia() {
+    Sofia.with(this)
+        .statusBarBackgroundAlpha(0)
+        .navigationBarBackgroundAlpha(0)
+        .invasionNavigationBar()
+        .invasionStatusBar()
+        .statusBarDarkFont()
 }

@@ -20,7 +20,7 @@ abstract class Application : Application() {
     override fun onCreate() {
         super.onCreate()
         context = WeakReference(this)
-        BuildConfigWrapper._BuildConfig = BuildConfig
+        BuildConfigWrapper._BuildConfig = buildConfig
         log.info("APP启动：${BuildConfigWrapper.VERSION_NAME}")
     }
 
@@ -29,7 +29,7 @@ abstract class Application : Application() {
         super.onTerminate()
     }
 
-    protected abstract val BuildConfig: Class<*>
+    protected abstract val buildConfig: Class<*>
 
     companion object: ContextResource {
         @JvmStatic
