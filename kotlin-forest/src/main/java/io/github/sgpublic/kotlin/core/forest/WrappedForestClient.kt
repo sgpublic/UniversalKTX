@@ -15,7 +15,7 @@ interface RequestCallback<DataT> {
      * 当接口请求出错或 onResponse 方法调用期间抛错时调用此方法
      * @param e 错误封装
      */
-    fun onException(e: UniktxForestException?) {}
+    fun onException(e: UniktxForestException) {}
 
     /**
      * 相应回调，此方法不在主线程内调用，请勿直接在此方法内操作 UI
@@ -32,6 +32,7 @@ private val executor = Executors.newSingleThreadExecutor()
 
 fun <T> ForestRequest<T>.doSync(): T {
     return try {
+        @Suppress("UNCHECKED_CAST")
         execute() as T
     } catch (e: ForestRuntimeException) {
         log.warn("接口调用出错", e)
