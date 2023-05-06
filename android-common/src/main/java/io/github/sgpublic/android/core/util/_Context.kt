@@ -3,16 +3,19 @@ package io.github.sgpublic.android.core.util
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
-import androidx.annotation.*
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Lifecycle
 import io.github.sgpublic.android.Application
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 fun Context.Toast(content: String) {
@@ -101,6 +104,14 @@ interface ContextResource {
             return it.getDrawable(0)!!
         }
     }
+
+    val Int.dp: Int get() = toFloat().dp.toInt()
+    val Float.dp: Float get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, this, getContext().resources.displayMetrics)
+
+    val Int.sp: Int get() = toFloat().sp.toInt()
+    val Float.sp: Float get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_SP, this, getContext().resources.displayMetrics)
 }
 
 inline fun <reified T: Any> ContextResource.getSysService(): T {

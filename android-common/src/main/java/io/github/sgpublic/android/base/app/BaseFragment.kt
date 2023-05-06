@@ -1,8 +1,6 @@
 package io.github.sgpublic.android.base.app
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<VB: ViewBinding>(private val contest: AppCompatActivity) : Fragment() {
+abstract class BaseFragment<VB: ViewBinding>(private val context: AppCompatActivity) : Fragment() {
     private var _binding: VB? = null
     @Suppress("PropertyName")
     protected val ViewBinding: VB get() = _binding!!
@@ -24,7 +22,7 @@ abstract class BaseFragment<VB: ViewBinding>(private val contest: AppCompatActiv
         return ViewBinding.root
     }
 
-    override fun getContext(): AppCompatActivity = contest
+    override fun getContext(): AppCompatActivity = context
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         onViewSetup()
@@ -88,15 +86,6 @@ abstract class BaseFragment<VB: ViewBinding>(private val contest: AppCompatActiv
 
     open fun onBackPressed(): Boolean {
         return false
-    }
-
-    val mainLooper: Looper get() = contest.mainLooper
-
-    protected fun postDelayed(delay: Long, block: () -> Unit) {
-        Handler(mainLooper).postDelayed(block, delay)
-    }
-    protected fun post(block: () -> Unit) {
-        Handler(mainLooper).post(block)
     }
 
     class Factory(private val context: AppCompatActivity): FragmentFactory() {

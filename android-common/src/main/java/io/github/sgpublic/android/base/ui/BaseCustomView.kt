@@ -3,34 +3,24 @@ package io.github.sgpublic.android.base.ui
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.StyleableRes
+import androidx.core.content.res.use
 import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.android.core.util.ContextResource
-import java.util.concurrent.atomic.AtomicReference
 
 /**
  * @author Madray Haven
  * @Date 2023/4/6 11:24
  */
-
 abstract class BaseCustomView<VB : ViewBinding> @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ViewGroup(context, attrs, defStyleAttr), ContextResource {
-    @StyleableRes
-    protected val StyleableAttrs: IntArray? = null
-
     init {
-        val a = AtomicReference<TypedArray>()
-        try {
-            StyleableAttrs?.let {
-                a.set(getContext().obtainStyledAttributes(attrs, it))
-            }
-            onInit(context, a.get())
-        } finally {
-            a.get()?.recycle()
-        }
+        onInit(context)
     }
 
     protected abstract val ViewBinding: VB
@@ -38,9 +28,18 @@ abstract class BaseCustomView<VB : ViewBinding> @JvmOverloads constructor(
     /**
      * 初始化自定义 View
      * @param context context
-     * @param attrs 参数集，会自动释放。当 BaseCustomView#getStyleableAttr() 方法返回 null 时，此参数传入 null
      */
-    protected abstract fun onInit(context: Context?, attrs: TypedArray?)
+    protected abstract fun onInit(context: Context)
+
+    /**
+     * 读取样式参数，自动释放，仅允许在 onInit 中调用
+     * @param styledRes R.styleable.xxx
+     * @param block 在 block 中使用 TypedArray
+     * @see android.content.res.TypedArray
+     */
+    protected fun useStyleRes(@StyleableRes styledRes: IntArray, block: TypedArray.() -> Unit) {
+        context.obtainStyledAttributes(attrs, styledRes).use(block)
+    }
 
     @CallSuper
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -55,4 +54,9 @@ abstract class BaseCustomView<VB : ViewBinding> @JvmOverloads constructor(
             it.layout(0, 0, it.measuredWidth, it.measuredHeight)
         }
     }
+}
+
+inline fun <reified VB: ViewBinding> BaseCustomView<VB>.viewBinding(): Lazy<VB> = lazy {
+    VB::class.java.getMethod("inflate", LayoutInflater::class.java, View::class.java, Boolean::class.java)
+        .invoke(null, LayoutInflater.from(context), this, true) as VB
 }
