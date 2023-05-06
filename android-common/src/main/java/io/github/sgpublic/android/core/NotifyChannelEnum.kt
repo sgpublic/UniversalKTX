@@ -41,7 +41,7 @@ interface NotifyChannelEnum {
     val enableLights: Boolean get() = false
     val showBadge: Boolean get() = false
 
-    fun getName(): String
+    val name: String
 
     /**
      * 在当前通知频道配置下创建一个通知构建器
@@ -49,7 +49,7 @@ interface NotifyChannelEnum {
      * @return 通知构建器
      */
     fun newBuilder(context: Context): Builder {
-        return Builder(context, getName())
+        return Builder(context, name)
     }
 
     /**
@@ -391,7 +391,7 @@ interface NotifyChannelEnum {
                 .invoke(null, null) as Array<NotifyChannelEnum>
             for (value in invoke) {
                 val channel: NotificationChannelCompat.Builder =
-                    NotificationChannelCompat.Builder(value.getName(), value.importance)
+                    NotificationChannelCompat.Builder(value.name, value.importance)
                 channel.setLightsEnabled(value.enableLights)
                 channel.setShowBadge(value.showBadge)
                 channel.setName(context.getStringRes(value.channelName))

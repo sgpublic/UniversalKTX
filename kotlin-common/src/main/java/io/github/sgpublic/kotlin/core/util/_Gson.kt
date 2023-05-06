@@ -38,3 +38,7 @@ fun JsonObject.getBoolean(name: String, def: Boolean = false): Boolean {
     return get(name)?.takeIf { it.isJsonPrimitive }
         ?.asBoolean ?: def
 }
+
+fun JsonObject.take(name: String): JsonElement? {
+    return this[name]?.takeIf { !it.isJsonNull }
+}

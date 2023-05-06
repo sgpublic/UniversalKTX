@@ -32,16 +32,6 @@ abstract class Application : Application() {
     protected abstract val buildConfig: Class<*>
 
     companion object: ContextResource {
-        @JvmStatic
-        protected val mHandler: Handler by lazy {
-            Handler(Looper.getMainLooper())
-        }
-        @JvmStatic
-        fun Post(runnable: () -> Unit) = mHandler.post(runnable)
-        @JvmStatic
-        fun PostDelayed(runnable: () -> Unit, delayMillis: Long) =
-            mHandler.postDelayed(runnable, delayMillis)
-
         private var context: WeakReference<Application>? = null
         override fun getContext(): Context = ApplicationContext
         val ApplicationContext: Context get() = this.context?.get()!!

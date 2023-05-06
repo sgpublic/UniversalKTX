@@ -9,11 +9,16 @@ import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Lifecycle
 import io.github.sgpublic.android.Application
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 fun Context.Toast(content: String) {
-    Application.Post {
+    GlobalScope.launch(Dispatchers.Main) {
         android.widget.Toast.makeText(
-            this, content,
+            this@Toast, content,
             if (content.length < 20) android.widget.Toast.LENGTH_SHORT
             else android.widget.Toast.LENGTH_LONG
         ).show()
