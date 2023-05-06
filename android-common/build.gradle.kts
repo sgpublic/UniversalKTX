@@ -43,9 +43,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation(project(":kotlin-common"))
+    api(project(":kotlin-common"))
+    api(project(":kotlin-logback"))
     implementation("org.slf4j:slf4j-api:2.0.7")
-    implementation(project(":kotlin-logback"))
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.databinding:viewbinding:8.0.1")
