@@ -1,7 +1,9 @@
 package io.github.sgpublic.android.core.util
 
 import android.animation.Animator
+import android.view.LayoutInflater
 import android.view.View
+import androidx.viewbinding.ViewBinding
 
 fun View.animate(isVisible: Boolean, duration: Long, onFinished: (() -> Unit)? = null) {
     post {
@@ -24,4 +26,13 @@ fun View.animate(isVisible: Boolean, duration: Long, onFinished: (() -> Unit)? =
             }
         }.start()
     }
+}
+
+interface LayoutInflaterProvider {
+    fun getLayoutInflater(): LayoutInflater
+}
+
+inline fun <reified VB: ViewBinding> LayoutInflaterProvider.viewBinding(): Lazy<VB> = lazy {
+    VB::class.java.getMethod("inflate", LayoutInflater::class.java)
+        .invoke(null, getLayoutInflater()) as VB
 }

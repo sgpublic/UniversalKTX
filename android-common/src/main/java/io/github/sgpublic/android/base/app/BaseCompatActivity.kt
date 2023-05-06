@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.common.R
+import io.github.sgpublic.android.core.util.LayoutInflaterProvider
 import io.github.sgpublic.android.core.util.Toast
 import io.github.sgpublic.android.core.util.finishAll
 import io.github.sgpublic.android.core.util.register
@@ -16,7 +17,7 @@ import io.github.sgpublic.android.core.util.unregister
  * @author Madray Haven
  * @Date 2023/4/4 14:27
  */
-abstract class BaseCompatActivity: AppCompatActivity() {
+abstract class BaseCompatActivity: AppCompatActivity(), LayoutInflaterProvider {
     @Suppress("PropertyName")
     protected val STATE: Bundle = Bundle()
 

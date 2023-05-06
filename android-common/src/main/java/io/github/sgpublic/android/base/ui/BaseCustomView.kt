@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.StyleableRes
 import androidx.core.content.res.use
 import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.android.core.util.ContextResource
+import io.github.sgpublic.android.core.util.LayoutInflaterProvider
 
 /**
  * @author Madray Haven
@@ -18,12 +18,19 @@ import io.github.sgpublic.android.core.util.ContextResource
  */
 abstract class BaseCustomView<VB : ViewBinding> @JvmOverloads constructor(
     context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ViewGroup(context, attrs, defStyleAttr), ContextResource {
+) : ViewGroup(context, attrs, defStyleAttr), ContextResource, LayoutInflaterProvider {
     init {
         onInit(context)
     }
 
     protected abstract val ViewBinding: VB
+
+    inline fun <reified VB: ViewBinding> LayoutInflaterProvider.viewBinding(): Lazy<VB> = lazy {
+        VB::class.java.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
+            .invoke(null, getLayoutInflater(), this, true) as VB
+    }
+
+    override fun getLayoutInflater(): LayoutInflater = LayoutInflater.from(context)
 
     /**
      * 初始化自定义 View
@@ -54,9 +61,4 @@ abstract class BaseCustomView<VB : ViewBinding> @JvmOverloads constructor(
             it.layout(0, 0, it.measuredWidth, it.measuredHeight)
         }
     }
-}
-
-inline fun <reified VB: ViewBinding> BaseCustomView<VB>.viewBinding(): Lazy<VB> = lazy {
-    VB::class.java.getMethod("inflate", LayoutInflater::class.java, View::class.java, Boolean::class.java)
-        .invoke(null, LayoutInflater.from(context), this, true) as VB
 }
