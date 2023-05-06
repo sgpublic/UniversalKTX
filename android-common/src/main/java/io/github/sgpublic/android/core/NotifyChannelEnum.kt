@@ -388,7 +388,7 @@ interface NotifyChannelEnum {
             val manager: NotificationManagerCompat = NotificationManagerCompat.from(context.getContext())
             @Suppress("UNCHECKED_CAST")
             val invoke = enum.getMethod("values")
-                .invoke(null, null) as Array<NotifyChannelEnum>
+                .invoke(null) as Array<NotifyChannelEnum>
             for (value in invoke) {
                 val channel: NotificationChannelCompat.Builder =
                     NotificationChannelCompat.Builder(value.name, value.importance)
