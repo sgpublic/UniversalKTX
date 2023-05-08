@@ -10,7 +10,6 @@ import androidx.annotation.StyleableRes
 import androidx.core.content.res.use
 import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.android.core.util.ContextResource
-import io.github.sgpublic.android.core.util.LayoutInflaterProvider
 
 /**
  * @author Madray Haven
@@ -18,25 +17,22 @@ import io.github.sgpublic.android.core.util.LayoutInflaterProvider
  */
 abstract class BaseCustomView<VB : ViewBinding> @JvmOverloads constructor(
     context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ViewGroup(context, attrs, defStyleAttr), ContextResource, LayoutInflaterProvider {
+) : ViewGroup(context, attrs, defStyleAttr), ContextResource {
+    private var _vb: VB? = null
+    protected val ViewBinding: VB get() = _vb!!
+
     init {
-        onInit(context)
+        _vb = onCreateViewBinding(LayoutInflater.from(context))
+        onInit(context, _vb!!)
     }
 
-    protected abstract val ViewBinding: VB
-
-    inline fun <reified VB: ViewBinding> LayoutInflaterProvider.viewBinding(): Lazy<VB> = lazy {
-        VB::class.java.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
-            .invoke(null, getLayoutInflater(), this, true) as VB
-    }
-
-    override fun getLayoutInflater(): LayoutInflater = LayoutInflater.from(context)
+    abstract fun onCreateViewBinding(layoutInflater: LayoutInflater): VB
 
     /**
      * 初始化自定义 View
      * @param context context
      */
-    protected abstract fun onInit(context: Context)
+    protected abstract fun onInit(context: Context, ViewBinding: VB)
 
     /**
      * 读取样式参数，自动释放，仅允许在 onInit 中调用
