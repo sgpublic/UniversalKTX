@@ -29,36 +29,14 @@ suspend fun Toast(context: Context, content: String) = withContext(Dispatchers.M
 }
 
 
-fun ComponentActivity.Toast(@StringRes content: Int) = lifecycleScope.launch {
-    Toast(this@Toast, content)
-}
-fun Fragment.Toast(@StringRes content: Int) = lifecycleScope.launch {
-    Toast(requireContext(), content)
-}
-suspend fun Toast(context: Context, @StringRes content: Int) {
-    Toast(context, context.getString(content))
-}
-
-
-fun ComponentActivity.Toast(@StringRes content: Int, code: Int) = lifecycleScope.launch {
-    Toast(this@Toast, content, code)
-}
-fun Fragment.Toast(@StringRes content: Int, code: Int) = lifecycleScope.launch {
-    Toast(requireContext(), content, code)
-}
-suspend fun Toast(context: Context, @StringRes content: Int, code: Int) {
-    Toast(context, "${context.getString(content)} ($code)")
-}
-
-
-fun ComponentActivity.Toast(@StringRes content: Int, message: String?, code: Int) = lifecycleScope.launch {
+fun ComponentActivity.Toast(@StringRes content: Int, message: String? = null, code: Int? = null) = lifecycleScope.launch {
     Toast(this@Toast, content, message, code)
 }
-fun Fragment.Toast(@StringRes content: Int, message: String?, code: Int) = lifecycleScope.launch {
+fun Fragment.Toast(@StringRes content: Int, message: String? = null, code: Int? = null) = lifecycleScope.launch {
     Toast(requireContext(), content, message, code)
 }
-suspend fun Toast(context: Context, @StringRes content: Int, message: String?, code: Int) {
-    Toast(context, context.getString(content) +
-            "，".takeIf { message != null } +
-            "${message ?: ""} ($code)")
+suspend fun Toast(context: Context, @StringRes content: Int, message: String? = null, code: Int? = null) {
+    Toast(context, context.getString(content)
+            + ("".takeIf { message == null } ?: "，$message")
+            + ("".takeIf { code == null } ?: " (${code})"))
 }
