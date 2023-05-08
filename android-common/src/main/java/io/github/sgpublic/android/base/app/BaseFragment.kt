@@ -12,10 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.android.core.util.LayoutInflaterProvider
+import io.github.sgpublic.kotlin.util.Loggable
 
 abstract class BaseFragment<VB: ViewBinding>(
     private val context: AppCompatActivity,
-) : Fragment(), LayoutInflaterProvider {
+) : Fragment(), LayoutInflaterProvider, Loggable {
     private var _binding: VB? = null
     @Suppress("PropertyName")
     protected val ViewBinding: VB get() = _binding!!

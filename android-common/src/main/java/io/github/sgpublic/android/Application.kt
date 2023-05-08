@@ -12,10 +12,11 @@ import androidx.annotation.CallSuper
 import io.github.sgpublic.android.core.NotifyChannelEnum
 import io.github.sgpublic.android.core.util.BuildConfigWrapper
 import io.github.sgpublic.android.core.util.ContextResource
+import io.github.sgpublic.kotlin.util.Loggable
 import io.github.sgpublic.kotlin.util.log
 import java.lang.ref.WeakReference
 
-abstract class Application : Application() {
+abstract class Application : Application(), Loggable {
     @CallSuper
     override fun onCreate() {
         super.onCreate()

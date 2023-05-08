@@ -12,12 +12,13 @@ import io.github.sgpublic.android.core.util.Toast
 import io.github.sgpublic.android.core.util.finishAll
 import io.github.sgpublic.android.core.util.register
 import io.github.sgpublic.android.core.util.unregister
+import io.github.sgpublic.kotlin.util.Loggable
 
 /**
  * @author Madray Haven
  * @Date 2023/4/4 14:27
  */
-abstract class BaseCompatActivity: AppCompatActivity(), LayoutInflaterProvider {
+abstract class BaseCompatActivity: AppCompatActivity(), LayoutInflaterProvider, Loggable {
     @Suppress("PropertyName")
     protected val STATE: Bundle = Bundle()
 
