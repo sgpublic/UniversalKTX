@@ -2,7 +2,7 @@ package io.github.sgpublic.kotlin.core.forest
 
 import com.dtflys.forest.exceptions.ForestRuntimeException
 import com.dtflys.forest.http.ForestRequest
-import io.github.sgpublic.kotlin.util.log
+import org.slf4j.LoggerFactory
 import java.util.concurrent.Executors
 
 /**
@@ -35,7 +35,8 @@ fun <T> ForestRequest<T>.doSync(): T {
         @Suppress("UNCHECKED_CAST")
         execute() as T
     } catch (e: ForestRuntimeException) {
-        log.warn("接口调用出错", e)
+        LoggerFactory.getLogger(javaClass)
+            .warn("接口调用出错", e)
         throw e.toUniktxForestException()
     }
 }
@@ -51,7 +52,8 @@ fun <T> ForestRequest<T>.doAsync(callback: RequestCallback<T>? = null) {
         try {
             callback?.onResponse(resp)
         } catch (e: Exception) {
-            log.error("回调响应抛错", e)
+            LoggerFactory.getLogger(javaClass)
+                .error("回调响应抛错", e)
             if (e is UniktxForestException) {
                 callback!!.onException(e)
             } else {

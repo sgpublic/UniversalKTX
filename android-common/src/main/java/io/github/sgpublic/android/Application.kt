@@ -14,6 +14,7 @@ import io.github.sgpublic.android.core.util.BuildConfigWrapper
 import io.github.sgpublic.android.core.util.ContextResource
 import io.github.sgpublic.kotlin.util.Loggable
 import io.github.sgpublic.kotlin.util.log
+import org.slf4j.LoggerFactory
 import java.lang.ref.WeakReference
 
 abstract class Application : Application(), Loggable {
@@ -48,13 +49,14 @@ abstract class Application : Application(), Loggable {
     }
 }
 
-fun Application.listenException() {
+fun <T: Application>  T.listenException() {
     Handler(mainLooper).post {
         while (true) {
             try {
                 Looper.loop()
             } catch (e: Throwable){
-                log.error("应用意外退出", e)
+                LoggerFactory.getLogger(javaClass)
+                    .error("应用意外退出", e)
                 throw e
             }
         }

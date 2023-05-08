@@ -9,7 +9,3 @@ val Loggable.log: Logger get() = LoggerFactory.getLogger(
     if (!this::class.isCompanion) javaClass
     else javaClass.enclosingClass
 )
-val Any.log: Logger get() = LoggerFactory.getLogger(
-    if (!this::class.isCompanion) javaClass
-    else javaClass.enclosingClass
-)
