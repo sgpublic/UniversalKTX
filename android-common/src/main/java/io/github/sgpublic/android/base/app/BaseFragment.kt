@@ -92,16 +92,12 @@ abstract class BaseFragment<VB: ViewBinding>(
         return false
     }
 
-    class Factory(private val context: AppCompatActivity): FragmentFactory() {
+    class Factory(private val context: AppCompatActivity): FragmentFactory(), Loggable {
         override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
             val clazz = loadFragmentClass(classLoader, className)
             return if (BaseFragment::class.java.isAssignableFrom(clazz)) {
-                try {
-                    clazz.getConstructor(AppCompatActivity::class.java)
-                        .newInstance(context)
-                } catch (e: Exception) {
-                    clazz.getConstructor().newInstance(context)
-                }
+                clazz.getConstructor(AppCompatActivity::class.java)
+                    .newInstance(context)
             } else {
                 super.instantiate(classLoader, className)
             }
