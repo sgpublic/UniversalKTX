@@ -10,6 +10,7 @@ abstract class BaseViewModelActivity<VB: ViewBinding, VM: ViewModel>: BaseActivi
 
     @CallSuper
     override fun beforeCreate() {
+        super.beforeCreate()
         onViewModelSetup()
     }
 

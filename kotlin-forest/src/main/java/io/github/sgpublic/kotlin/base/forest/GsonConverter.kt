@@ -1,20 +1,17 @@
 package io.github.sgpublic.kotlin.base.forest
 
-import com.dtflys.forest.converter.json.ForestJsonConverter
+import com.dtflys.forest.converter.json.ForestGsonConverter
 import com.dtflys.forest.exceptions.ForestConvertException
-import com.dtflys.forest.utils.ForestDataType
-import com.dtflys.forest.utils.StringUtils
 import io.github.sgpublic.kotlin.core.util.fromGson
 import io.github.sgpublic.kotlin.core.util.toGson
 import java.lang.reflect.Type
-import java.nio.charset.Charset
 
 /**
  *
  * @author Madray Haven
  * @date 2022/10/20 16:28
  */
-object GsonConverter: ForestJsonConverter {
+object GsonConverter: ForestGsonConverter() {
     /** 日期格式  */
     private var dateFormat: String? = null
     override fun getDateFormat(): String {
@@ -31,20 +28,6 @@ object GsonConverter: ForestJsonConverter {
         } catch (e: Exception) {
             throw ForestConvertException(this, e)
         }
-    }
-
-    override fun <T> convertToJavaObject(
-        source: ByteArray,
-        targetType: Class<T>,
-        charset: Charset
-    ): T {
-        val str = StringUtils.fromBytes(source, charset)
-        return convertToJavaObject(str, targetType)
-    }
-
-    override fun <T> convertToJavaObject(source: ByteArray, targetType: Type, charset: Charset): T? {
-        val str = StringUtils.fromBytes(source, charset)
-        return convertToJavaObject(str, targetType)
     }
 
     override fun encodeToString(obj: Any): String {
@@ -67,12 +50,8 @@ object GsonConverter: ForestJsonConverter {
             return newMap
         }
         if (obj is CharSequence) {
-            return convertToJavaObject(obj.toString(), LinkedHashMap<String, Any>().javaClass)
+            return convertToJavaObject(obj.toString(), clazz)
         }
         return clazz.fromGson(obj.toGson())
-    }
-
-    override fun getDataType(): ForestDataType {
-        return ForestDataType.JSON
     }
 }

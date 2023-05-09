@@ -96,8 +96,12 @@ abstract class BaseFragment<VB: ViewBinding>(
         override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
             val clazz = loadFragmentClass(classLoader, className)
             return if (BaseFragment::class.java.isAssignableFrom(clazz)) {
-                clazz.getConstructor(AppCompatActivity::class.java)
-                    .newInstance(context)
+                try {
+                    clazz.getConstructor(AppCompatActivity::class.java)
+                        .newInstance(context)
+                } catch (e: Exception) {
+                    clazz.getConstructor().newInstance(context)
+                }
             } else {
                 super.instantiate(classLoader, className)
             }

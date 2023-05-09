@@ -3,6 +3,7 @@ package io.github.sgpublic.android.base.app
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import io.github.sgpublic.android.Application
@@ -48,7 +49,10 @@ abstract class BaseCompatActivity: AppCompatActivity(), LayoutInflaterProvider, 
         })
     }
 
-    protected open fun beforeCreate() { }
+    @CallSuper
+    protected open fun beforeCreate() {
+        supportFragmentManager.fragmentFactory = BaseFragment.Factory(this)
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         STATE.takeIf { !STATE.isEmpty }?.let {
