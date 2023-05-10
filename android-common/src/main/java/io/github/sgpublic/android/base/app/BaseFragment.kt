@@ -4,19 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.LinearLayout
+import androidx.activity.OnBackPressedDispatcher
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.viewbinding.ViewBinding
+import io.github.sgpublic.android.core.util.BackPressedDispatcherProvider
 import io.github.sgpublic.android.core.util.LayoutInflaterProvider
 import io.github.sgpublic.kotlin.util.Loggable
 
 abstract class BaseFragment<VB: ViewBinding>(
     private val context: AppCompatActivity,
-) : Fragment(), LayoutInflaterProvider, Loggable {
+) : Fragment(),
+    LayoutInflaterProvider,
+    BackPressedDispatcherProvider,
+    Loggable {
     private var _binding: VB? = null
     @Suppress("PropertyName")
     protected val ViewBinding: VB get() = _binding!!
@@ -56,19 +59,19 @@ abstract class BaseFragment<VB: ViewBinding>(
 
     open fun getTitle(): CharSequence = ""
 
-    protected open fun initViewAtTop(view: View){
-        var statusbarheight = 0
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            statusbarheight = resources.getDimensionPixelSize(resourceId)
-        }
-        val params = try {
-            view.layoutParams as LinearLayout.LayoutParams
-        } catch (e: ClassCastException) {
-            view.layoutParams as FrameLayout.LayoutParams
-        }
-        params.topMargin = statusbarheight
-    }
+//    protected open fun initViewAtTop(view: View){
+//        var statusbarheight = 0
+//        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+//        if (resourceId > 0) {
+//            statusbarheight = resources.getDimensionPixelSize(resourceId)
+//        }
+//        val params = try {
+//            view.layoutParams as LinearLayout.LayoutParams
+//        } catch (e: ClassCastException) {
+//            view.layoutParams as FrameLayout.LayoutParams
+//        }
+//        params.topMargin = statusbarheight
+//    }
 
     protected abstract fun onCreateViewBinding(container: ViewGroup?): VB
 
@@ -90,6 +93,10 @@ abstract class BaseFragment<VB: ViewBinding>(
 
     open fun onBackPressed(): Boolean {
         return false
+    }
+
+    override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
+        return context.onBackPressedDispatcher
     }
 
     class Factory(private val context: AppCompatActivity): FragmentFactory(), Loggable {
