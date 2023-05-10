@@ -11,8 +11,10 @@ interface BackPressedDispatcherProvider {
     fun getOnBackPressedDispatcher(): OnBackPressedDispatcher
 }
 
-fun BackPressedDispatcherProvider.setupToolbar(toolbar: MaterialToolbar) {
+fun BackPressedDispatcherProvider.setupToolbar(toolbar: MaterialToolbar, onBack: () -> Unit = {
+    getOnBackPressedDispatcher().onBackPressed()
+}) {
     toolbar.setNavigationOnClickListener {
-        getOnBackPressedDispatcher().onBackPressed()
+        onBack.invoke()
     }
 }

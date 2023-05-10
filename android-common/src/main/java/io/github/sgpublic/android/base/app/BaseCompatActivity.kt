@@ -1,7 +1,6 @@
 package io.github.sgpublic.android.base.app
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.yanzhenjie.sofia.Sofia
@@ -26,10 +25,10 @@ abstract class BaseCompatActivity: AppCompatActivity(),
     @Suppress("PropertyName")
     protected val STATE: Bundle = Bundle()
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         register()
         beforeCreate()
-        super.onCreate(savedInstanceState, persistentState)
+        super.onCreate(savedInstanceState)
         supportFragmentManager.fragmentFactory = BaseFragment.Factory(this)
         if (savedInstanceState != null) {
             STATE.putAll(savedInstanceState)
@@ -62,7 +61,7 @@ abstract class BaseCompatActivity: AppCompatActivity(),
         super.onSaveInstanceState(outState)
     }
 
-    protected val isActivityAtBottom: Boolean = false
+    protected open val isActivityAtBottom: Boolean = false
 
     override fun onDestroy() {
         STATE.clear()
