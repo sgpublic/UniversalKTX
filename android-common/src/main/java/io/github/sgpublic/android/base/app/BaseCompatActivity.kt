@@ -5,6 +5,7 @@ import android.os.PersistableBundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
+import com.yanzhenjie.sofia.Sofia
 import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.common.R
 import io.github.sgpublic.android.core.util.LayoutInflaterProvider
@@ -71,4 +72,17 @@ abstract class BaseCompatActivity: AppCompatActivity(), LayoutInflaterProvider, 
         super.onDestroy()
         unregister()
     }
+}
+
+fun AppCompatActivity.applySofia() {
+    Sofia.with(this)
+        .statusBarBackgroundAlpha(0)
+        .navigationBarBackgroundAlpha(0)
+        .invasionNavigationBar()
+        .invasionStatusBar()
+        .statusBarDarkFont()
+}
+
+fun AppCompatActivity.applyFragmentManager() {
+    supportFragmentManager.fragmentFactory = BaseFragment.Factory(this)
 }

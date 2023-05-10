@@ -32,12 +32,3 @@ abstract class BaseActivity<VB : ViewBinding>: BaseCompatActivity() {
 
     protected open fun onViewSetup() { }
 }
-
-fun BaseActivity<*>.applySofia() {
-    Sofia.with(this)
-        .statusBarBackgroundAlpha(0)
-        .navigationBarBackgroundAlpha(0)
-        .invasionNavigationBar()
-        .invasionStatusBar()
-        .statusBarDarkFont()
-}
