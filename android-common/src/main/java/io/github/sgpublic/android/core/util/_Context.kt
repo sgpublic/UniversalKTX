@@ -2,6 +2,7 @@ package io.github.sgpublic.android.core.util
 
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources.Theme
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import androidx.annotation.AttrRes
@@ -74,6 +75,15 @@ interface ContextResource {
         getContext().obtainStyledAttributes(intArrayOf(id)).use {
             return it.getDrawable(0)!!
         }
+    }
+
+    @ColorInt
+    fun getColorAttr(@AttrRes id: Int) = TypedValue().also {
+        getTheme().resolveAttribute(id, it, true)
+    }.data
+
+    fun getTheme(): Theme {
+        return getContext().theme
     }
 
     val Int.dp: Int get() = toFloat().dp.toInt()
