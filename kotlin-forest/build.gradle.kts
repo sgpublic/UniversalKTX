@@ -17,7 +17,6 @@ java {
 dependencies {
     api(project(":kotlin-common"))
     api(project(":kotlin-logback"))
-    implementation("org.slf4j:slf4j-api:2.0.7")
 
     // forest 声明式网络请求框架
     /* https://forest.dtflyx.com/pages/1.5.x/intro/ */

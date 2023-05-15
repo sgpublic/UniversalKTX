@@ -12,5 +12,15 @@ import io.github.sgpublic.android.core.util.viewBinding
  */
 @SuppressLint("CustomSplashScreen")
 abstract class IconSplashActivity: BaseActivity<ActivitySplashBinding>() {
+    final override fun onActivityCreated(hasSavedInstanceState: Boolean) {
+        if (!isTaskRoot) {
+            finish()
+            return
+        }
+        doSplash()
+    }
+
+    abstract fun doSplash()
+
     final override val ViewBinding: ActivitySplashBinding by viewBinding()
 }
