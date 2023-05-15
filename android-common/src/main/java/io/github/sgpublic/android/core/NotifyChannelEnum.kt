@@ -3,14 +3,13 @@ package io.github.sgpublic.android.core
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.RemoteViews
+import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationChannelCompat
@@ -19,7 +18,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.LocusIdCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.graphics.drawable.IconCompat
-import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.core.util.ContextResource
 
 /**
@@ -75,6 +73,7 @@ interface NotifyChannelEnum {
          * 发送通知以启动前台服务，使用已有 id 会更新现有通知
          * @param id 通知 id
          */
+        @RequiresApi(Build.VERSION_CODES.O)
         fun startForeground(id: Int) {
             if (context is Service) {
                 context.startForeground(id, notification)
