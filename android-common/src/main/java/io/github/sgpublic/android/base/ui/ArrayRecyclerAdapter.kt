@@ -15,7 +15,7 @@ import java.lang.Integer.max
  * @author Madray Haven
  * @date 2022/10/28 9:44
  */
-abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: List<ItemT>? = null):
+abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<ItemT>? = null):
     RecyclerView.Adapter<ArrayRecyclerAdapter.Holder<VB>>() {
 
     private val data: ArrayList<ItemT> = ArrayList<ItemT>().also {
