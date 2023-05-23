@@ -1,6 +1,11 @@
 package io.github.sgpublic.android.base.app
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.yanzhenjie.sofia.Sofia
@@ -67,6 +72,27 @@ abstract class BaseCompatActivity: AppCompatActivity(),
         STATE.clear()
         super.onDestroy()
         unregister()
+    }
+}
+
+interface IntentBeanAddonComponent<T: Parcelable> {
+    fun startActivity(origin: BaseCompatActivity, target: Class<out IntentBeanAddon<T>>, data: T) {
+        origin.startActivity(Intent(origin, target).putExtra("bean", data))
+    }
+}
+
+@Suppress("unused")
+interface IntentBeanAddon<T: Parcelable> {
+    fun getIntent(): Intent?
+}
+
+inline fun <reified T: Parcelable> IntentBeanAddon<T>.getIntentBean(): T {
+    return if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
+        T::class.javaObjectType
+        getIntent()?.getParcelableExtra("bean", T::class.java)!!
+    } else {
+        @Suppress("DEPRECATION")
+        getIntent()?.getParcelableExtra("bean")!!
     }
 }
 

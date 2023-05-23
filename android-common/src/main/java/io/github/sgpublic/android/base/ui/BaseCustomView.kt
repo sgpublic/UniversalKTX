@@ -58,3 +58,18 @@ abstract class BaseCustomView<VB : ViewBinding> @JvmOverloads constructor(
         }
     }
 }
+
+/**
+ * 读取样式参数，自动释放，仅允许在 onInit 中调用
+ * @param attrs 参数集
+ * @param styledRes R.styleable.xxx
+ * @param block 在 block 中使用 TypedArray
+ * @see android.content.res.TypedArray
+ */
+fun ContextResource.useStyleRes(
+    attrs: AttributeSet?,
+    @StyleableRes styledRes: IntArray,
+    block: TypedArray.() -> Unit
+) {
+    getContext().obtainStyledAttributes(attrs, styledRes).use(block)
+}

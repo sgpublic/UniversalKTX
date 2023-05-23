@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("plugin.parcelize")
 
     id("maven-publish")
     id("signing")

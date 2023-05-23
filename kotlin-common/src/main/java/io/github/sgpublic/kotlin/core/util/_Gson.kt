@@ -10,7 +10,7 @@ import com.google.gson.JsonSyntaxException
 import java.lang.reflect.Type
 import kotlin.reflect.KClass
 
-private val GSON: Gson = GsonBuilder()
+var GSON: Gson = GsonBuilder()
     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
     .disableHtmlEscaping()
     .create()
