@@ -48,7 +48,7 @@ abstract class BaseCompatActivity: AppCompatActivity(),
                     return
                 }
                 if (now - last < 2000) {
-                    Application.finishAll()
+                    finishAll()
                     return
                 }
                 last = now
