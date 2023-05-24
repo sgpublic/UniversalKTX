@@ -1,5 +1,6 @@
 package io.github.sgpublic.android.core.util
 
+import android.R
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources.Theme
@@ -98,3 +99,10 @@ interface ContextResource {
 inline fun <reified T: Any> ContextResource.getSysService(): T {
     return getContext().getSystemService()!!
 }
+
+val ContextResource.selectableItemBackgroundBorderless: Drawable get() = getDrawableAttr(
+    R.attr.selectableItemBackgroundBorderless
+)
+val ContextResource.selectableItemBackground: Drawable get() = getDrawableAttr(
+    R.attr.selectableItemBackground
+)

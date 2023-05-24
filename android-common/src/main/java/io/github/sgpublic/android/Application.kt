@@ -41,11 +41,6 @@ abstract class Application : Application(), Loggable {
         fun callTerminate() {
             this.context?.get()?.onTerminate()
         }
-
-        val SelectableItemBackgroundBorderless: Drawable
-            get() = getDrawableAttr(android.R.attr.selectableItemBackgroundBorderless)
-        val SelectableItemBackground: Drawable
-            get() = getDrawableAttr(android.R.attr.selectableItemBackground)
     }
 }
 
