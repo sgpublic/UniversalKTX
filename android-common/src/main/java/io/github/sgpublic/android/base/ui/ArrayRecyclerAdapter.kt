@@ -16,7 +16,7 @@ import java.lang.Integer.max
  * @date 2022/10/28 9:44
  */
 abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<ItemT>? = null):
-    RecyclerView.Adapter<ArrayRecyclerAdapter.Holder<VB>>() {
+    RecyclerView.Adapter<ViewBindingHolder<VB>>() {
 
     private val data: ArrayList<ItemT> = ArrayList<ItemT>().also {
         it.addAll(list ?: return@also)
@@ -49,19 +49,19 @@ abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<Ite
         this.onLongClick = onLongClick
     }
 
-    final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder<VB> {
-        return Holder(onCreateViewBinding(
+    final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewBindingHolder<VB> {
+        return ViewBindingHolder(onCreateViewBinding(
             LayoutInflater.from(parent.context), parent
         ))
     }
 
-    final override fun onBindViewHolder(holder: Holder<VB>, position: Int) {
+    final override fun onBindViewHolder(holder: ViewBindingHolder<VB>, position: Int) {
         val data = data[position]
-        onBindViewHolder(holder.binding.root.context, holder.binding, data)
-        getClickableView(holder.binding)?.setOnClickListener {
+        onBindViewHolder(holder.context, holder.ViewBinding, data)
+        getClickableView(holder.ViewBinding)?.setOnClickListener {
             onClick.invoke(data)
         }
-        getLongClickableView(holder.binding)?.setOnLongClickListener {
+        getLongClickableView(holder.ViewBinding)?.setOnLongClickListener {
             onLongClick.invoke(data)
         }
     }
@@ -72,6 +72,4 @@ abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<Ite
     abstract fun onCreateViewBinding(inflater: LayoutInflater, parent: ViewGroup): VB
     abstract fun onBindViewHolder(context: Context, ViewBinding: VB, data: ItemT)
     final override fun getItemCount() = data.size
-
-    class Holder<VB: ViewBinding>(val binding: VB): ViewHolder(binding.root)
 }
