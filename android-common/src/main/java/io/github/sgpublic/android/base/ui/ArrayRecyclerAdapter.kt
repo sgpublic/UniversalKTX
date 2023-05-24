@@ -57,7 +57,7 @@ abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<Ite
 
     final override fun onBindViewHolder(holder: ViewBindingHolder<VB>, position: Int) {
         val data = data[position]
-        onBindViewHolder(holder.context, holder.ViewBinding, data)
+        onBindViewHolder(holder.getContext(), holder.ViewBinding, data)
         getClickableView(holder.ViewBinding)?.setOnClickListener {
             onClick.invoke(data)
         }
