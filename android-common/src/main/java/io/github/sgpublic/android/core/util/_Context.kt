@@ -52,12 +52,25 @@ fun Application.Companion.finishAll() {
     tmp.clear()
 }
 
+fun Application.Companion.finishOthers(left: Context) {
+    val tmp = ArrayList(contexts)
+    for (context in tmp) {
+        if (context !is AppCompatActivity || left != context) {
+            continue
+        }
+        if (context.lifecycle.currentState != Lifecycle.State.DESTROYED){
+            context.finish()
+        }
+    }
+    tmp.clear()
+}
+
 val Context.isNightMode: Boolean get() = resources.configuration.uiMode and
         Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
 
-interface ContextResource {
-    fun getContext(): Context
+interface ContextResource: LocalBroadcastProvider {
+    override fun getContext(): Context
 
     @ColorInt
     fun getColorRes(@ColorRes id: Int): Int {
