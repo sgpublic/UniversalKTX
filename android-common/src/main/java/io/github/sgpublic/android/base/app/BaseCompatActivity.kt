@@ -1,6 +1,5 @@
 package io.github.sgpublic.android.base.app
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
@@ -9,12 +8,11 @@ import android.os.Parcelable
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.yanzhenjie.sofia.Sofia
-import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.common.R
 import io.github.sgpublic.android.core.util.BackPressedDispatcherProvider
 import io.github.sgpublic.android.core.util.LayoutInflaterProvider
 import io.github.sgpublic.android.core.util.Toast
-import io.github.sgpublic.android.core.util.finishAll
+import io.github.sgpublic.android.core.util.finishAllActivity
 import io.github.sgpublic.android.core.util.register
 import io.github.sgpublic.android.core.util.unregister
 import io.github.sgpublic.kotlin.util.Loggable
@@ -48,7 +46,7 @@ abstract class BaseCompatActivity: AppCompatActivity(),
                     return
                 }
                 if (now - last < 2000) {
-                    finishAll()
+                    finishAllActivity()
                     return
                 }
                 last = now

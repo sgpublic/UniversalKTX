@@ -39,7 +39,7 @@ fun Context.unregister() {
     }
 }
 
-fun Context.finishAll() {
+fun Context.finishAllActivity() {
     val tmp = ArrayList(contexts)
     for (context in tmp){
         if (context !is AppCompatActivity) {
@@ -52,10 +52,10 @@ fun Context.finishAll() {
     tmp.clear()
 }
 
-fun Context.finishOthers() {
+fun Context.finishOtherActivity() {
     val tmp = ArrayList(contexts)
     for (context in tmp) {
-        if (context !is AppCompatActivity || context != this) {
+        if (context !is AppCompatActivity || context == this) {
             continue
         }
         if (context.lifecycle.currentState != Lifecycle.State.DESTROYED){

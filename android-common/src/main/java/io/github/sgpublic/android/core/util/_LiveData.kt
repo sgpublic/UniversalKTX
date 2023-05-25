@@ -37,6 +37,10 @@ class BooleanLiveData : MutableLiveData<Boolean?> {
     override fun getValue(): Boolean {
         return java.lang.Boolean.TRUE == super.getValue()
     }
+
+    fun refresh() {
+        postValue(value)
+    }
 }
 
 class StringLiveData : MutableLiveData<String> {
