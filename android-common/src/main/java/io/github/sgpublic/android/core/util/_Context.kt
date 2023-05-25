@@ -9,6 +9,7 @@ import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -98,6 +99,14 @@ interface ContextResource: LocalBroadcastProvider {
 
     fun getTheme(): Theme {
         return getContext().theme
+    }
+
+    fun getDimenRes(@DimenRes id: Int): Float {
+        return getContext().resources.getDimension(id)
+    }
+
+    fun getDimenResInt(@DimenRes id: Int): Int {
+        return getDimenRes(id).toInt()
     }
 
     val Int.dp: Int get() = toFloat().dp.toInt()
