@@ -26,7 +26,7 @@ fun <T: Any> ViewModel.launchWithIOContext(block: suspend CoroutineScope.() -> T
     }
 }
 
-class BooleanLiveData : MutableLiveData<Boolean?> {
+class BooleanLiveData : MutableLiveData<Boolean> {
     constructor() : super()
     constructor(init: Boolean) : super(init)
 
