@@ -39,11 +39,10 @@ class ManualableScheduler(
 
     fun insert() {
         synchronized(isTaskExecuting) {
-            if (isTaskExecuting.get()) {
-                synchronized(needCallOnInserted) {
-                    needCallOnInserted.set(true)
-                }
-            } else {
+            synchronized(needCallOnInserted) {
+                needCallOnInserted.set(true)
+            }
+            if (!isTaskExecuting.get()) {
                 future?.cancel(false)
                 scheduleNextTask(0)
             }
