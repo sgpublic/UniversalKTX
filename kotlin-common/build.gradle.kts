@@ -15,6 +15,8 @@ java {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.13.2")
+
     /* https://github.com/google/gson */
     implementation("com.google.code.gson:gson:2.10.1")
 }

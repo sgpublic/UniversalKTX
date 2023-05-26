@@ -15,6 +15,8 @@ java {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.13.2")
+
     implementation(kotlin("reflect"))
     api("org.slf4j:slf4j-api:2.0.7")
 }
