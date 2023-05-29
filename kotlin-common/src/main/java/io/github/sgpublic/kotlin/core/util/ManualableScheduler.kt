@@ -26,7 +26,7 @@ class ManualableScheduler(
     fun start() {
         synchronized(isRunning) {
             if (isRunning.compareAndSet(false, true)) {
-                scheduleNextTask()
+                scheduleNextTask(0)
             }
         }
     }
