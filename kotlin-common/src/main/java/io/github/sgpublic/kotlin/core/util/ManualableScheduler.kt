@@ -32,6 +32,11 @@ class ManualableScheduler(
     }
 
     fun stop() {
+        synchronized(isTaskExecuting) {
+            if (!isTaskExecuting.get()) {
+                future?.cancel(true)
+            }
+        }
         synchronized(isRunning) {
             isRunning.set(false)
         }
@@ -39,16 +44,14 @@ class ManualableScheduler(
 
     fun insert() {
         synchronized(isTaskExecuting) {
-            synchronized(needCallOnInserted) {
-                needCallOnInserted.set(true)
-            }
             if (!isTaskExecuting.get()) {
-                future?.cancel(false)
+                future?.cancel(true)
                 scheduleNextTask(0)
+            } else {
+                synchronized(needCallOnInserted) {
+                    needCallOnInserted.set(true)
+                }
             }
-        }
-        synchronized(needCallOnInserted) {
-            needCallOnInserted.set(true)
         }
     }
 
@@ -71,11 +74,11 @@ class ManualableScheduler(
         synchronized(isTaskExecuting) {
             isTaskExecuting.set(false)
         }
-        scheduleNextTask()
         synchronized(needCallOnInserted) {
             if (needCallOnInserted.compareAndSet(true, false)) {
                 onInserted?.invoke()
             }
         }
+        scheduleNextTask()
     }
 }
