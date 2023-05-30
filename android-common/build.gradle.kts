@@ -48,8 +48,12 @@ dependencies {
     api(project(":kotlin-logback"))
     implementation("org.slf4j:slf4j-api:2.0.7")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.databinding:viewbinding:8.0.1")
+    implementation("androidx.databinding:viewbinding:8.0.2")
+
+    val lifecycle = "2.5.1"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle")
 
     /* https://github.com/yanzhenjie/Sofia */
     implementation("com.yanzhenjie:sofia:1.0.5")

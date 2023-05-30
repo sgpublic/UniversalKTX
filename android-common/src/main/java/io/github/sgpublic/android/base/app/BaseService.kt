@@ -36,7 +36,7 @@ open class BinderX(
     private val activity: AppCompatActivity,
     private val connection: ServiceConnection,
 ): Binder(), Closeable {
-    private val Observer = LifecycleEventObserver { source, event ->
+    private val Observer = LifecycleEventObserver { _, event ->
         if (event == Lifecycle.Event.ON_DESTROY) {
             closeQuietly()
         }
