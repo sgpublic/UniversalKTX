@@ -139,7 +139,7 @@ abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
      * 返回 null 则表示不可拖动
      * @return 拖动时间附加目标 View
      */
-    abstract val DragView: View?
+    protected open fun getDragView(ViewBinding: VB): View? = null
 
     protected open fun onOverlayDrag(x: Float, y: Float) {}
 
