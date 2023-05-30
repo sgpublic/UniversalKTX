@@ -3,6 +3,7 @@ package io.github.sgpublic.android.core.util
 import android.animation.Animator
 import android.view.LayoutInflater
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
 fun View.animate(isVisible: Boolean, duration: Long, onFinished: (() -> Unit)? = null) {
@@ -35,4 +36,16 @@ interface LayoutInflaterProvider {
 inline fun <reified VB: ViewBinding> LayoutInflaterProvider.viewBinding(): Lazy<VB> = lazy {
     VB::class.java.getMethod("inflate", LayoutInflater::class.java)
         .invoke(null, getLayoutInflater()) as VB
+}
+
+fun RecyclerView.isItemVisible(
+    position: Int,
+    completelyVisible: Boolean = true,
+    acceptEndPointInclusion: Boolean = true,
+): Boolean {
+    val layoutManager = layoutManager ?: return false
+    return layoutManager.isViewPartiallyVisible(
+        layoutManager.getChildAt(position) ?: return false,
+        completelyVisible, acceptEndPointInclusion
+    )
 }

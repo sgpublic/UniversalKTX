@@ -84,14 +84,9 @@ interface IntentBeanAddon<T: Parcelable> {
     fun getIntent(): Intent?
 }
 
-inline fun <reified T: Parcelable> IntentBeanAddon<T>.getIntentBean(): T {
-    return if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
-        T::class.javaObjectType
-        getIntent()?.getParcelableExtra("bean", T::class.java)!!
-    } else {
-        @Suppress("DEPRECATION")
-        getIntent()?.getParcelableExtra("bean")!!
-    }
+fun <T: Parcelable> IntentBeanAddon<T>.getIntentBean(): T {
+    @Suppress("DEPRECATION")
+    return getIntent()?.getParcelableExtra("bean")!!
 }
 
 internal fun AppCompatActivity.applySofia() {

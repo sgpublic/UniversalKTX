@@ -19,4 +19,6 @@ dependencies {
 
     /* https://github.com/google/gson */
     implementation("com.google.code.gson:gson:2.10.1")
+    /* https://github.com/square/okhttp */
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 }
