@@ -29,11 +29,19 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
         return result
     }
 
-    fun replaceForIndexIf(element: T, operator: (T) -> Boolean): Int {
-        data.replaceAll {
-            element.takeIf(operator) ?: it
+    fun replaceForIndex(operator: (T) -> T?): Int {
+        val listIterator = data.listIterator()
+        var index = -1
+        while (listIterator.hasNext()) {
+            index += 1
+            val currentItem = listIterator.next()
+            val newItem = operator.invoke(currentItem)
+                ?: continue
+            set.remove(currentItem)
+            set.add(newItem)
+            return index
         }
-        return indexOf(element)
+        return -1
     }
 
     fun addForIndex(element: T): Int {
@@ -46,6 +54,7 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
             if (existItem >= element) {
                 set.add(element)
                 data.add(index, element)
+                index += 1
                 break
             }
         }
@@ -60,10 +69,19 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
         return index
     }
 
-    fun removeForIndex(element: T): Int {
-        val index = indexOf(element)
-        remove(element)
-        return index
+    fun removeForIndex(operator: (T) -> Boolean): Int {
+        val listIterator = data.listIterator()
+        var index = -1
+        while (listIterator.hasNext()) {
+            index += 1
+            val next = listIterator.next()
+            if (operator.invoke(next)) {
+                listIterator.remove()
+                set.remove(next)
+                return index
+            }
+        }
+        return -1
     }
 
     override fun add(element: T): Boolean {
