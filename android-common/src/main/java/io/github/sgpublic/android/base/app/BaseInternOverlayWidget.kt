@@ -14,6 +14,7 @@ import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.kotlin.util.Loggable
 import io.github.sgpublic.kotlin.util.log
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.math.abs
 
 
 /**
@@ -26,7 +27,8 @@ abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
     private val parent: ViewGroup = context.window.decorView
         .findViewById(android.R.id.content)
 
-    protected lateinit var ViewBinding: VB
+    private lateinit var _vb: VB
+    protected val ViewBinding: VB get() = _vb
 
     abstract fun onCreateViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup): VB
 
@@ -39,7 +41,7 @@ abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
     fun create() {
         synchronized(created) {
             if (created.get()) return
-            ViewBinding = onCreateViewBinding(LayoutInflater.from(context), parent)
+            _vb = onCreateViewBinding(LayoutInflater.from(context), parent)
             beforeCreate()
             lifecycleRegistry.currentState = Lifecycle.State.INITIALIZED
             onSetupView()
@@ -98,7 +100,7 @@ abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
 
     @CallSuper
     protected open fun onSetupView() {
-        DragView?.setOnTouchListener(object : OnTouchListener {
+        getDragView(ViewBinding)?.setOnTouchListener(object : OnTouchListener {
             private var lastX = 0f
             private var lastY = 0f
             private var downX = 0f
@@ -124,8 +126,8 @@ abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
                         onOverlayDrag(lastX, lastY)
                     }
 
-                    MotionEvent.ACTION_UP -> if (Math.abs(event.rawX - downX) < 10 &&
-                        Math.abs(event.rawY - downY) < 10
+                    MotionEvent.ACTION_UP -> if (abs(event.rawX - downX) < 10 &&
+                        abs(event.rawY - downY) < 10
                     ) {
                         v.performClick()
                     }
