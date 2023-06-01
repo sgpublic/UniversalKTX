@@ -67,7 +67,7 @@ abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
         ViewBinding.root.visibility = View.VISIBLE
         lifecycleRegistry.currentState = if (hadHide) Lifecycle.State.RESUMED else Lifecycle.State.STARTED
         log.debug("onShow()")
-        onHide()
+        onShow()
     }
 
     @CallSuper
