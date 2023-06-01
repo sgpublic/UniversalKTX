@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.base.app
+package io.github.sgpublic.android.base.overlay
 
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -24,8 +24,9 @@ import kotlin.math.abs
 abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
     private val context: AppCompatActivity
 ): LifecycleOwner, Loggable {
-    private val parent: ViewGroup = context.window.decorView
-        .findViewById(android.R.id.content)
+    private val parent: ViewGroup by lazy {
+        context.window.decorView.findViewById(android.R.id.content)
+    }
 
     private lateinit var _vb: VB
     protected val ViewBinding: VB get() = _vb
