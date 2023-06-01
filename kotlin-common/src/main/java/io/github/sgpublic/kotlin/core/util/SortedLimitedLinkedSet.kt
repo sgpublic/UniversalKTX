@@ -49,6 +49,7 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
             val currentItem = listIterator.next()
             val newItem = operator.invoke(currentItem)
                 ?: continue
+            listIterator.set(newItem)
             set.remove(currentItem)
             set.add(newItem)
             return index
@@ -66,7 +67,6 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
             if (existItem >= element) {
                 set.add(element)
                 data.add(index, element)
-                index += 1
                 break
             }
         }

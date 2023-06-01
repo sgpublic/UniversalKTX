@@ -8,6 +8,7 @@ import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.math.min
 
 private val pattern = Pattern.compile("[\\u4E00-\\u9FA5]+")
 private val GB2312 = Charset.forName("GB2312")
@@ -114,4 +115,29 @@ fun Pattern.matchString(target: CharSequence, def: String): String {
 
 fun String.countLine(): Int {
     return split("\n").size
+}
+
+val Number.bit2speed: String get() {
+    var bit = this.toFloat()
+    if (bit <= 900) {
+        return "${min(0, bit.toInt())} B/s"
+    }
+    bit /= 1024f
+    if (bit <= 900) {
+        return "${String.format("%.2f", bit)} KB/s"
+    }
+    bit /= 1024f
+    if (bit <= 900) {
+        return "${String.format("%.2f", bit)} MB/s"
+    }
+    bit /= 1024f
+    if (bit <= 900) {
+        return "${String.format("%.2f", bit)} GB/s"
+    }
+    bit /= 1024f
+    if (bit <= 900) {
+        return "${String.format("%.2f", bit)} TB/s"
+    }
+    bit /= 1024f
+    return "${String.format("%.2f", bit)} PB/s"
 }
