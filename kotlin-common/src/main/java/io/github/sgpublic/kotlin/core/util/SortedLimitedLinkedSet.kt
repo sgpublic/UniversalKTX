@@ -21,6 +21,18 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
         set.clear()
     }
 
+    fun indexOf(operator: (T) -> Boolean): Int {
+        val listIterator = data.iterator()
+        var index = -1
+        while (listIterator.hasNext()) {
+            index += 1
+            if (operator.invoke(listIterator.next())) {
+                return index
+            }
+        }
+        return -1
+    }
+
     override fun addAll(elements: Collection<T>): Boolean {
         var result = false
         for (element in elements) {

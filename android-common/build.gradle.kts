@@ -50,7 +50,7 @@ dependencies {
 
     implementation("androidx.databinding:viewbinding:8.0.2")
 
-    val lifecycle = "2.4.0"
+    val lifecycle = "2.6.1"
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle")

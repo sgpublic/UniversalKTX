@@ -49,3 +49,5 @@ fun RecyclerView.isItemVisible(
         completelyVisible, acceptEndPointInclusion
     )
 }
+
+val Boolean.visibility: Int get() = if (this) View.VISIBLE else View.GONE
