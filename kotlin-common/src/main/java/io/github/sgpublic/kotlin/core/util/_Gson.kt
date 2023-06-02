@@ -35,6 +35,18 @@ fun <T: Any> KClass<T>.fromGson(src: JsonObject): T {
         throw GsonException(src, e)
     }
 }
+@Throws(GsonException::class)
+fun <T: Any> KClass<T>.fromGson(src: JsonArray): LinkedList<T> {
+    return try {
+        LinkedList<T>().also {
+            for (element in src) {
+                it.add(GSON.fromJson(element, this@fromGson.java))
+            }
+        }
+    } catch (e: JsonSyntaxException) {
+        throw GsonException(src, e)
+    }
+}
 
 @Throws(GsonException::class)
 fun <T: Any> Type.fromGson(src: String): T {
@@ -49,6 +61,19 @@ fun <T: Any> Type.fromGson(src: String): T {
 fun <T: Any> Type.fromGson(src: JsonObject): T {
     return try {
         GSON.fromJson(src, this)
+    } catch (e: JsonSyntaxException) {
+        throw GsonException(src, e)
+    }
+}
+
+@Throws(GsonException::class)
+fun <T: Any> Type.fromGson(src: JsonArray): LinkedList<T> {
+    return try {
+        LinkedList<T>().also {
+            for (element in src) {
+                it.add(GSON.fromJson(element, this@fromGson))
+            }
+        }
     } catch (e: JsonSyntaxException) {
         throw GsonException(src, e)
     }
