@@ -41,7 +41,7 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
         return result
     }
 
-    fun replaceForIndex(operator: (T) -> T?): Int {
+    suspend fun replaceForIndexSuspend(operator: suspend (T) -> T?, onReplace: suspend (Int, T) -> Unit) {
         val listIterator = data.listIterator()
         var index = -1
         while (listIterator.hasNext()) {
@@ -52,9 +52,23 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
             listIterator.set(newItem)
             set.remove(currentItem)
             set.add(newItem)
-            return index
+            onReplace.invoke(index, newItem)
         }
-        return -1
+    }
+
+    fun replaceForIndex(operator: (T) -> T?, onReplace: (Int, T) -> Unit) {
+        val listIterator = data.listIterator()
+        var index = -1
+        while (listIterator.hasNext()) {
+            index += 1
+            val currentItem = listIterator.next()
+            val newItem = operator.invoke(currentItem)
+                ?: continue
+            listIterator.set(newItem)
+            set.remove(currentItem)
+            set.add(newItem)
+            onReplace.invoke(index, newItem)
+        }
     }
 
     fun addForIndex(element: T): Int {
@@ -81,7 +95,7 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
         return index
     }
 
-    fun removeForIndex(operator: (T) -> Boolean): Int {
+    suspend fun removeForIndexSuspend(operator: suspend (T) -> Boolean, onRemove: suspend (Int, T) -> Unit) {
         val listIterator = data.listIterator()
         var index = -1
         while (listIterator.hasNext()) {
@@ -90,10 +104,23 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
             if (operator.invoke(next)) {
                 listIterator.remove()
                 set.remove(next)
-                return index
+                onRemove.invoke(index, next)
             }
         }
-        return -1
+    }
+
+     fun removeForIndex(operator: (T) -> Boolean, onRemove: (Int, T) -> Unit) {
+        val listIterator = data.listIterator()
+        var index = -1
+        while (listIterator.hasNext()) {
+            index += 1
+            val next = listIterator.next()
+            if (operator.invoke(next)) {
+                listIterator.remove()
+                set.remove(next)
+                onRemove.invoke(index, next)
+            }
+        }
     }
 
     override fun add(element: T): Boolean {
