@@ -17,9 +17,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "UniversalKTX"
 
-include(":android-common")
-include(":android-logback")
 include(":kotlin-common")
 include(":kotlin-forest")
 include(":kotlin-logback")
+
+include(":android-common")
+include(":android-logback")
 include(":android-forest")

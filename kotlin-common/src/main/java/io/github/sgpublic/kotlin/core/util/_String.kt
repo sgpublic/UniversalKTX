@@ -6,7 +6,7 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.Charset
 import java.security.MessageDigest
-import java.util.*
+import java.util.Base64
 import java.util.regex.Pattern
 import kotlin.math.min
 
@@ -140,4 +140,28 @@ val Number.bit2speed: String get() {
     }
     bit /= 1024f
     return "${String.format("%.2f", bit)} PB/s"
+}
+
+
+private val CN_NUMBERS = arrayOf("零", "一", "二", "三", "四", "五", "六", "七", "八", "九")
+private val CN_UNITS = arrayOf("", "十", "百", "千", "万")
+
+fun Int.toChineseNumber(): String {
+    var number = this
+    if (number == 0) {
+        return CN_NUMBERS[0]
+    }
+    val result = StringBuilder()
+    var unitIndex = 0
+    while (number > 0) {
+        val digit = number % 10
+        if (digit != 0) {
+            val digitChinese = CN_NUMBERS[digit]
+            val unitChinese = CN_UNITS[unitIndex]
+            result.insert(0, digitChinese + unitChinese)
+        }
+        number /= 10
+        unitIndex++
+    }
+    return result.toString()
 }
