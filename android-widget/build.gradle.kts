@@ -1,27 +1,26 @@
 plugins {
     id("com.android.library")
-    kotlin("android")
-    kotlin("plugin.parcelize")
-
-    id("maven-publish")
-    id("signing")
-    id("io.github.sgpublic.android-publish")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "io.github.sgpublic.android.common"
+    namespace = "io.github.sgpublic.android"
     compileSdk = 33
 
     defaultConfig {
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     buildFeatures {
@@ -44,17 +43,5 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    api(project(":kotlin-common"))
-    api(project(":kotlin-logback"))
-    implementation("org.slf4j:slf4j-api:2.0.7")
-
-    implementation("androidx.databinding:viewbinding:8.0.2")
-
-    val lifecycle = "2.6.1"
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle")
-
-    /* https://github.com/yanzhenjie/Sofia */
-    implementation("com.yanzhenjie:sofia:1.0.5")
+    api(project(":android-common"))
 }

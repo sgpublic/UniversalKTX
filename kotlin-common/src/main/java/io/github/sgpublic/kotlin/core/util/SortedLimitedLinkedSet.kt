@@ -41,21 +41,6 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
         return result
     }
 
-    suspend fun replaceForIndexSuspend(operator: suspend (T) -> T?, onReplace: suspend (Int, T) -> Unit) {
-        val listIterator = data.listIterator()
-        var index = -1
-        while (listIterator.hasNext()) {
-            index += 1
-            val currentItem = listIterator.next()
-            val newItem = operator.invoke(currentItem)
-                ?: continue
-            listIterator.set(newItem)
-            set.remove(currentItem)
-            set.add(newItem)
-            onReplace.invoke(index, newItem)
-        }
-    }
-
     fun replaceForIndex(operator: (T) -> T?, onReplace: (Int, T) -> Unit) {
         val listIterator = data.listIterator()
         var index = -1
@@ -93,20 +78,6 @@ class SortedLimitedLinkedSet<T: Comparable<T>>(
             set.remove(data.removeLast())
         }
         return index
-    }
-
-    suspend fun removeForIndexSuspend(operator: suspend (T) -> Boolean, onRemove: suspend (Int, T) -> Unit) {
-        val listIterator = data.listIterator()
-        var index = -1
-        while (listIterator.hasNext()) {
-            index += 1
-            val next = listIterator.next()
-            if (operator.invoke(next)) {
-                listIterator.remove()
-                set.remove(next)
-                onRemove.invoke(index, next)
-            }
-        }
     }
 
      fun removeForIndex(operator: (T) -> Boolean, onRemove: (Int, T) -> Unit) {

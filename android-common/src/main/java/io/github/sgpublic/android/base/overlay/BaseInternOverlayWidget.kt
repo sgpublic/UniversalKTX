@@ -1,5 +1,6 @@
 package io.github.sgpublic.android.base.overlay
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.viewbinding.ViewBinding
+import io.github.sgpublic.android.core.util.ContextResource
 import io.github.sgpublic.kotlin.util.Loggable
 import io.github.sgpublic.kotlin.util.log
 import java.util.concurrent.atomic.AtomicBoolean
@@ -23,7 +25,7 @@ import kotlin.math.abs
  */
 abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
     private val context: AppCompatActivity
-): LifecycleOwner, Loggable {
+): LifecycleOwner, Loggable, ContextResource {
     private val parent: ViewGroup by lazy {
         context.window.decorView.findViewById(android.R.id.content)
     }
@@ -152,4 +154,8 @@ abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
 
     override val lifecycle: Lifecycle
         get() = lifecycleRegistry
+
+    override fun getContext(): Context {
+        return context
+    }
 }
