@@ -8,7 +8,7 @@ import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.util.Base64
 import java.util.regex.Pattern
-import kotlin.math.min
+import kotlin.math.max
 
 private val pattern = Pattern.compile("[\\u4E00-\\u9FA5]+")
 private val GB2312 = Charset.forName("GB2312")
@@ -120,7 +120,7 @@ fun String.countLine(): Int {
 val Number.bit2speed: String get() {
     var bit = this.toFloat()
     if (bit <= 900) {
-        return "${min(0, bit.toInt())} B/s"
+        return "${max(0, bit.toInt())} B/s"
     }
     bit /= 1024f
     if (bit <= 900) {
