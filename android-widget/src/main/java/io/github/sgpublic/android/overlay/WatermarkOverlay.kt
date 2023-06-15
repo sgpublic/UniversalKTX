@@ -1,10 +1,9 @@
 package io.github.sgpublic.android.overlay
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import io.github.sgpublic.android.base.overlay.BaseInternOverlayWidget
+import io.github.sgpublic.android.mdc.overlay.BaseInternOverlayWidget
 import io.github.sgpublic.android.databinding.OverlayWatermarkBinding
 
 /**

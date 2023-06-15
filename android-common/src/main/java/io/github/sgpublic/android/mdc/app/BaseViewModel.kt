@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.base.app
+package io.github.sgpublic.android.mdc.app
 
 import androidx.lifecycle.ViewModel
 import io.github.sgpublic.kotlin.util.Loggable

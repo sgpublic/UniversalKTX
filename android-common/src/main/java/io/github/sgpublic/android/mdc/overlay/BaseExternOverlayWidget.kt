@@ -1,12 +1,7 @@
-package io.github.sgpublic.android.base.overlay
+package io.github.sgpublic.android.mdc.overlay
 
 import android.content.Context
-import android.graphics.PixelFormat
-import android.view.View
-import android.view.WindowManager
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
 import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.kotlin.util.Loggable
 

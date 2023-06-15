@@ -1,11 +1,11 @@
-package io.github.sgpublic.android.base.app
+package io.github.sgpublic.android.mdc.mdc
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseViewModelFragment<VB: ViewBinding, VM: ViewModel>(context: AppCompatActivity)
-    : BaseFragment<VB>(context) {
+abstract class MdcVMFragment<VB: ViewBinding, VM: ViewModel>(context: AppCompatActivity)
+    : MdcFragment<VB>(context) {
     @Suppress("PropertyName")
     protected abstract val ViewModel: VM
 

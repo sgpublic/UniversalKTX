@@ -1,8 +1,6 @@
-package io.github.sgpublic.android.base.app
+package io.github.sgpublic.android.mdc.mdc
 
 import android.content.Intent
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.OnBackPressedCallback
@@ -25,17 +23,11 @@ abstract class BaseCompatActivity: AppCompatActivity(),
     LayoutInflaterProvider,
     BackPressedDispatcherProvider,
     Loggable {
-    @Suppress("PropertyName")
-    protected val STATE: Bundle = Bundle()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         register()
         beforeCreate()
         super.onCreate(savedInstanceState)
-        supportFragmentManager.fragmentFactory = BaseFragment.Factory(this)
-        if (savedInstanceState != null) {
-            STATE.putAll(savedInstanceState)
-        }
+        supportFragmentManager.fragmentFactory = MdcFragment.Factory(this)
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(isActivityAtBottom) {
             private var last: Long = -1
             override fun handleOnBackPressed() {
@@ -57,17 +49,9 @@ abstract class BaseCompatActivity: AppCompatActivity(),
 
     protected open fun beforeCreate() { }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        STATE.takeIf { !STATE.isEmpty }?.let {
-            outState.putAll(STATE)
-        }
-        super.onSaveInstanceState(outState)
-    }
-
     protected open val isActivityAtBottom: Boolean = false
 
     override fun onDestroy() {
-        STATE.clear()
         super.onDestroy()
         unregister()
     }
@@ -99,5 +83,5 @@ internal fun AppCompatActivity.applySofia() {
 }
 
 fun AppCompatActivity.applyFragmentManager() {
-    supportFragmentManager.fragmentFactory = BaseFragment.Factory(this)
+    supportFragmentManager.fragmentFactory = MdcFragment.Factory(this)
 }

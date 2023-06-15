@@ -1,9 +1,9 @@
-package io.github.sgpublic.android.base.ui
+package io.github.sgpublic.android.mdc.ui
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
-import io.github.sgpublic.android.base.app.BaseViewModelActivity
+import io.github.sgpublic.android.mdc.mdc.MdcVMActivity
 import io.github.sgpublic.android.common.databinding.ActivityRecyclerBinding
 import io.github.sgpublic.android.core.util.viewBinding
 
@@ -13,7 +13,7 @@ import io.github.sgpublic.android.core.util.viewBinding
  * @date 2022/11/9 10:55
  */
 abstract class RecyclerActivity<ItemT, ViewT: ViewBinding, VM: ViewModel>:
-    BaseViewModelActivity<ActivityRecyclerBinding, VM>() {
+    MdcVMActivity<ActivityRecyclerBinding, VM>() {
     @CallSuper
     override fun onViewSetup() {
         ViewBinding.recyclerOrigin.adapter = Adapter

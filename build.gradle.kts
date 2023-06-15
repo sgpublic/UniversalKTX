@@ -1,10 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    val androidVer = "8.0.1"
+    val androidVer = "8.0.2"
     id("com.android.application") version androidVer apply false
     id("com.android.library") version androidVer apply false
 
-    val kotlinVer = "1.8.20"
+    val kotlinVer = "1.8.21"
     kotlin("android") version kotlinVer apply false
     kotlin("jvm") version kotlinVer apply false
     kotlin("plugin.parcelize") version kotlinVer apply false

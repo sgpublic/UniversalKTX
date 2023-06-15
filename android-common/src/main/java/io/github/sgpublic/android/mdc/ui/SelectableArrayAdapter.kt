@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.base.ui
+package io.github.sgpublic.android.mdc.ui
 
 import androidx.annotation.CallSuper
 import androidx.annotation.ColorRes

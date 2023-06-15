@@ -1,7 +1,5 @@
 package io.github.sgpublic.android.core.util
 
-import io.github.sgpublic.android.Application
-
 /**
  * @author Madray Haven
  * @Date 2023/4/7 10:19

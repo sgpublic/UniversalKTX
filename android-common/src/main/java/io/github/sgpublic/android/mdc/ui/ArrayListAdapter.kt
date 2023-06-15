@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.base.ui
+package io.github.sgpublic.android.mdc.ui
 
 import android.content.Context
 import android.view.LayoutInflater

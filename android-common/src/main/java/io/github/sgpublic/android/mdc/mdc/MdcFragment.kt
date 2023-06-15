@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.base.app
+package io.github.sgpublic.android.mdc.mdc
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import io.github.sgpublic.android.core.util.BackPressedDispatcherProvider
 import io.github.sgpublic.android.core.util.LayoutInflaterProvider
 import io.github.sgpublic.kotlin.util.Loggable
 
-abstract class BaseFragment<VB: ViewBinding>(
+abstract class MdcFragment<VB: ViewBinding>(
     private val context: AppCompatActivity,
 ) : Fragment(),
     LayoutInflaterProvider,
@@ -102,7 +102,7 @@ abstract class BaseFragment<VB: ViewBinding>(
     class Factory(private val context: AppCompatActivity): FragmentFactory(), Loggable {
         override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
             val clazz = loadFragmentClass(classLoader, className)
-            return if (BaseFragment::class.java.isAssignableFrom(clazz)) {
+            return if (MdcFragment::class.java.isAssignableFrom(clazz)) {
                 clazz.getConstructor(AppCompatActivity::class.java)
                     .newInstance(context)
             } else {

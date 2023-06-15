@@ -26,6 +26,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -48,6 +52,7 @@ dependencies {
     api(project(":kotlin-logback"))
     implementation("org.slf4j:slf4j-api:2.0.7")
 
+    implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.databinding:viewbinding:8.0.2")
 
     val lifecycle = "2.6.1"

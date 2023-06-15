@@ -1,11 +1,10 @@
-package io.github.sgpublic.android.base.app
+package io.github.sgpublic.android.mdc.mdc
 
 import android.os.Bundle
 import androidx.viewbinding.ViewBinding
-import com.yanzhenjie.sofia.Sofia
 import java.util.*
 
-abstract class BaseActivity<VB : ViewBinding>: BaseCompatActivity() {
+abstract class MdcActivity<VB : ViewBinding>: BaseCompatActivity() {
     private var _binding: VB? = null
     @Suppress("PropertyName")
     protected abstract val ViewBinding: VB
@@ -16,10 +15,10 @@ abstract class BaseActivity<VB : ViewBinding>: BaseCompatActivity() {
         super.onCreate(savedInstanceState)
         setupContentView()
         onViewSetup()
-        onActivityCreated(savedInstanceState != null)
+        onActivityCreated(savedInstanceState)
     }
 
-    protected abstract fun onActivityCreated(hasSavedInstanceState: Boolean)
+    protected abstract fun onActivityCreated(savedInstanceState: Bundle?)
 
     private fun setupContentView() {
         setContentView(ViewBinding.root)

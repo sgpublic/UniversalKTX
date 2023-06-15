@@ -1,9 +1,10 @@
-package io.github.sgpublic.android.app.activity
+package io.github.sgpublic.android.mdc.activity
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
-import io.github.sgpublic.android.base.app.BaseActivity
+import io.github.sgpublic.android.mdc.mdc.MdcActivity
 import io.github.sgpublic.android.common.databinding.ActivitySplashBinding
 import io.github.sgpublic.android.core.util.viewBinding
 
@@ -13,8 +14,8 @@ import io.github.sgpublic.android.core.util.viewBinding
  * @Date 2023/4/12 8:28
  */
 @SuppressLint("CustomSplashScreen")
-abstract class IconSplashActivity: BaseActivity<ActivitySplashBinding>() {
-    final override fun onActivityCreated(hasSavedInstanceState: Boolean) {
+abstract class IconSplashActivity: MdcActivity<ActivitySplashBinding>() {
+    final override fun onActivityCreated(savedInstanceState: Bundle?) {
         if (!isTaskRoot) {
             finish()
             return

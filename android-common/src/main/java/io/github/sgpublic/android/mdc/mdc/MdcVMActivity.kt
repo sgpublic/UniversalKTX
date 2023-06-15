@@ -1,10 +1,10 @@
-package io.github.sgpublic.android.base.app
+package io.github.sgpublic.android.mdc.mdc
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseViewModelActivity<VB: ViewBinding, VM: ViewModel>: BaseActivity<VB>() {
+abstract class MdcVMActivity<VB: ViewBinding, VM: ViewModel>: MdcActivity<VB>() {
     @Suppress("PropertyName")
     protected abstract val ViewModel: VM
 
