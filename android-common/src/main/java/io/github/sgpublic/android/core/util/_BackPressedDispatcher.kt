@@ -1,18 +1,15 @@
 package io.github.sgpublic.android.core.util
 
-import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.OnBackPressedDispatcherOwner
 import com.google.android.material.appbar.MaterialToolbar
 
 /**
  * @author Madray Haven
  * @Date 2023/5/10 11:10
  */
-interface BackPressedDispatcherProvider {
-    fun getOnBackPressedDispatcher(): OnBackPressedDispatcher
-}
 
-fun BackPressedDispatcherProvider.setupToolbar(toolbar: MaterialToolbar, onBack: () -> Unit = {
-    getOnBackPressedDispatcher().onBackPressed()
+fun OnBackPressedDispatcherOwner.setupToolbar(toolbar: MaterialToolbar, onBack: () -> Unit = {
+    onBackPressedDispatcher.onBackPressed()
 }) {
     toolbar.setNavigationOnClickListener {
         onBack.invoke()

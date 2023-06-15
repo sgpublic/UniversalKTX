@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.viewbinding.ViewBinding
-import io.github.sgpublic.android.core.util.BackPressedDispatcherProvider
 import io.github.sgpublic.android.core.util.LayoutInflaterProvider
 import io.github.sgpublic.kotlin.util.Loggable
 
@@ -18,7 +18,7 @@ abstract class MdcFragment<VB: ViewBinding>(
     private val context: AppCompatActivity,
 ) : Fragment(),
     LayoutInflaterProvider,
-    BackPressedDispatcherProvider,
+    OnBackPressedDispatcherOwner,
     Loggable {
     private var _binding: VB? = null
     @Suppress("PropertyName")
@@ -95,9 +95,8 @@ abstract class MdcFragment<VB: ViewBinding>(
         return false
     }
 
-    override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
-        return context.onBackPressedDispatcher
-    }
+    override val onBackPressedDispatcher: OnBackPressedDispatcher
+        get() = context.onBackPressedDispatcher
 
     class Factory(private val context: AppCompatActivity): FragmentFactory(), Loggable {
         override fun instantiate(classLoader: ClassLoader, className: String): Fragment {

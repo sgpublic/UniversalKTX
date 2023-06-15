@@ -7,7 +7,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.yanzhenjie.sofia.Sofia
 import io.github.sgpublic.android.common.R
-import io.github.sgpublic.android.core.util.BackPressedDispatcherProvider
 import io.github.sgpublic.android.core.util.LayoutInflaterProvider
 import io.github.sgpublic.android.core.util.Toast
 import io.github.sgpublic.android.core.util.finishAllActivity
@@ -21,7 +20,6 @@ import io.github.sgpublic.kotlin.util.Loggable
  */
 abstract class BaseCompatActivity: AppCompatActivity(),
     LayoutInflaterProvider,
-    BackPressedDispatcherProvider,
     Loggable {
     override fun onCreate(savedInstanceState: Bundle?) {
         register()
