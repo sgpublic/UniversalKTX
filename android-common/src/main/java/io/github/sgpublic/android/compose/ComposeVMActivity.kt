@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
  * @author Madray Haven
  * @Date 2023/6/15 9:19
  */
-abstract class ComposeViewModelActivity<VM: ViewModel>: ComposeCompatActivity() {
+abstract class ComposeVMActivity<VM: ViewModel>: ComposeCompatActivity() {
     @Suppress("PropertyName")
     protected abstract val ViewModel: VM
 
