@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.mdc.mdc
+package io.github.sgpublic.android.mdc.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

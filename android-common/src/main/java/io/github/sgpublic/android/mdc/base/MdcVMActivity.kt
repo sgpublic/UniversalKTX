@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.mdc.mdc
+package io.github.sgpublic.android.mdc.base
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel

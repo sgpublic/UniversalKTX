@@ -17,7 +17,7 @@ import io.github.sgpublic.kotlin.util.Loggable
  * @Date 2023/6/15 9:08
  */
 abstract class ComposeCompatActivity: ComponentActivity(), Loggable {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    final override fun onCreate(savedInstanceState: Bundle?) {
         register()
         beforeCreate()
         super.onCreate(savedInstanceState)
@@ -41,7 +41,10 @@ abstract class ComposeCompatActivity: ComponentActivity(), Loggable {
         setContent {
             Content()
         }
+        onActivityCreated(savedInstanceState)
     }
+
+    protected abstract fun onActivityCreated(savedInstanceState: Bundle?)
 
     @Composable
     abstract fun Content()
