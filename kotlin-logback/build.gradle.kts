@@ -19,4 +19,5 @@ dependencies {
 
     implementation(kotlin("reflect"))
     api("org.slf4j:slf4j-api:2.0.7")
+    api("ch.qos.logback:logback-classic:1.4.4")
 }
