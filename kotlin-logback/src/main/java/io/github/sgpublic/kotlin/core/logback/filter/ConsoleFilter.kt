@@ -9,9 +9,9 @@ import ch.qos.logback.core.spi.FilterReply
  * @author Madray Haven
  * @Date 2023/6/21 14:03
  */
-class ConsoleFilter(
-    debug: Boolean,
-    private val baseName: String
+open class ConsoleFilter(
+    debug: Boolean = false,
+    private val baseName: String = ""
 ) : Filter<ILoggingEvent>() {
     private val self: Level
     private val out: Level
