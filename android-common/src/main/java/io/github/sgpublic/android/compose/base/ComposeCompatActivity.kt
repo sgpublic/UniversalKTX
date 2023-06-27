@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.compose
+package io.github.sgpublic.android.compose.base
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

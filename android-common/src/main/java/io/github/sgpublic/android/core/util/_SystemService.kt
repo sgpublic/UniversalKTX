@@ -1,5 +1,6 @@
 package io.github.sgpublic.android.core.util
 
+import android.app.ActivityManager
 import android.content.Context
 import android.net.ConnectivityManager
 
@@ -9,6 +10,12 @@ import android.net.ConnectivityManager
  */
 
 
-val Context.connectivityManager: ConnectivityManager get() {
-    return getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+val Context.sysConnectivityManager: ConnectivityManager get() {
+    return getSystemService(Context.CONNECTIVITY_SERVICE)
+            as ConnectivityManager
+}
+
+val Context.sysActivityManager: ActivityManager get() {
+    return getSystemService(Context.ACTIVITY_SERVICE)
+            as ActivityManager
 }

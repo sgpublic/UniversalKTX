@@ -136,15 +136,16 @@ enum class NetworkType {
 }
 
 @get:RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-val Context.currentNetworkType: NetworkType get() {
-    val actNw = connectivityManager.getNetworkCapabilities(
-        connectivityManager.activeNetwork
-    ) ?: return NetworkType.UNKNOWN
-    return when {
-        actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> NetworkType.WIFI
-        actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> NetworkType.CELLULAR
-        actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> NetworkType.ETHERNET
-        actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> NetworkType.BLUETOOTH
-        else -> NetworkType.UNKNOWN
+val Context.currentNetworkType: Set<NetworkType> get() {
+    val actNw = sysConnectivityManager.getNetworkCapabilities(
+        sysConnectivityManager.activeNetwork
+    ) ?: return emptySet()
+    val result = mutableSetOf<NetworkType>()
+    when {
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> result.add(NetworkType.WIFI)
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> result.add(NetworkType.CELLULAR)
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> result.add(NetworkType.ETHERNET)
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> result.add(NetworkType.BLUETOOTH)
     }
+    return result
 }
