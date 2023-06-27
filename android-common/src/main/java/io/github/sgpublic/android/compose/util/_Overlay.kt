@@ -23,7 +23,7 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
  * @Date 2023/6/27 20:26
  */
 
-fun OverlayComposeView(context: Context, block: @Composable () -> Unit): ComposeView {
+fun OverlayComposeView(context: Context): ComposeView {
     val composeView = ComposeView(context)
     val lifecycle = object : LifecycleOwner, SavedStateRegistryOwner, ViewModelStoreOwner {
         private val lifecycleRegex = LifecycleRegistry(this)
@@ -50,8 +50,6 @@ fun OverlayComposeView(context: Context, block: @Composable () -> Unit): Compose
     composeView.setViewTreeLifecycleOwner(lifecycle)
     composeView.setViewTreeViewModelStoreOwner(lifecycle)
     composeView.setViewTreeSavedStateRegistryOwner(lifecycle)
-
-    composeView.setContent(block)
 
     return composeView
 }
