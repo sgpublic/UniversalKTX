@@ -49,7 +49,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     api(project(":kotlin-common"))
-    api(project(":kotlin-logback"))
+    implementation(project(":kotlin-logback")) {
+        exclude("ch.qos.logback", "logback-classic")
+    }
     implementation("org.slf4j:slf4j-api:2.0.7")
 
     implementation("androidx.activity:activity-compose:1.7.2")

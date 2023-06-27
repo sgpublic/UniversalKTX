@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.CallSuper
@@ -13,7 +12,6 @@ import io.github.sgpublic.android.core.NotifyChannelEnum
 import io.github.sgpublic.android.core.util.BuildConfigWrapper
 import io.github.sgpublic.android.core.util.ContextResource
 import io.github.sgpublic.kotlin.util.Loggable
-import io.github.sgpublic.kotlin.util.log
 import org.slf4j.LoggerFactory
 import java.lang.ref.WeakReference
 

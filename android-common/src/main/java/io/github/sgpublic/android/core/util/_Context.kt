@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources.Theme
 import android.graphics.drawable.Drawable
+import android.net.NetworkCapabilities
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.getSystemService
@@ -128,3 +130,21 @@ val ContextResource.selectableItemBackgroundBorderless: Drawable get() = getDraw
 val ContextResource.selectableItemBackground: Drawable get() = getDrawableAttr(
     R.attr.selectableItemBackground
 )
+
+enum class NetworkType {
+    WIFI, CELLULAR, ETHERNET, BLUETOOTH, UNKNOWN
+}
+
+@get:RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+val Context.currentNetworkType: NetworkType get() {
+    val actNw = connectivityManager.getNetworkCapabilities(
+        connectivityManager.activeNetwork
+    ) ?: return NetworkType.UNKNOWN
+    return when {
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> NetworkType.WIFI
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> NetworkType.CELLULAR
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> NetworkType.ETHERNET
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> NetworkType.BLUETOOTH
+        else -> NetworkType.UNKNOWN
+    }
+}

@@ -44,7 +44,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    api(project(":android-common"))
+    implementation(project(":android-common")) {
+        exclude("ch.qos.logback", "logback-classic")
+    }
 
     // forest 声明式网络请求框架
     /* https://forest.dtflyx.com/pages/1.5.x/intro/ */

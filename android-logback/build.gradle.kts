@@ -44,7 +44,12 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    api(project(":android-common"))
+    implementation(project(":android-common")) {
+        exclude("ch.qos.logback", "logback-classic")
+    }
+    api(project(":kotlin-logback")) {
+        exclude("ch.qos.logback", "logback-classic")
+    }
 
     // 适用于 Android 的 logback：
     // https://github.com/tony19/logback-android
