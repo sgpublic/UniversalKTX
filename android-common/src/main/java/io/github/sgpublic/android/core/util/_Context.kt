@@ -19,6 +19,7 @@ import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Lifecycle
 import io.github.sgpublic.android.Application
+import io.github.sgpublic.android.core.sysservice.sysConnectivityManager
 
 private val contexts = LinkedHashSet<Context>()
 

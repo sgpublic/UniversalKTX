@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.core.util
+package io.github.sgpublic.android.core.sysservice
 
 import android.app.ActivityManager
 import android.content.Context
@@ -18,4 +18,11 @@ val Context.sysConnectivityManager: ConnectivityManager get() {
 val Context.sysActivityManager: ActivityManager get() {
     return getSystemService(Context.ACTIVITY_SERVICE)
             as ActivityManager
+}
+
+val Context.sysEthernetManager: EthernetManagerWrapper get() {
+    val name = Context::class.java
+        .getField("ETHERNET_SERVICE")
+        .get(null) as String
+    return EthernetManagerWrapper(getSystemService(name))
 }
