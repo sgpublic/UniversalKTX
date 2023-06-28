@@ -1,10 +1,12 @@
-@file:SuppressLint("NewApi", "PrivateApi")
+@file:SuppressLint("NewApi", "PrivateApi", "DiscouragedPrivateApi")
 
 package io.github.sgpublic.android.core.sysservice
 
 import android.annotation.SuppressLint
 import android.net.IpConfiguration
+import android.net.LinkAddress
 import android.net.StaticIpConfiguration
+import java.net.InetAddress
 
 /**
  * @author Madray Haven
@@ -31,21 +33,36 @@ class IpConfigurationWrapper(
     internal val conf: IpConfiguration
 ) {
     private val ipAssClass: Class<*> by lazy {
-        Class.forName("android.net.IpConfiguration.IpAssignment")
+        val ipConf = Class.forName("android.net.IpConfiguration")
+        for (clazz in ipConf.declaredClasses) {
+            if (clazz.simpleName == "IpAssignment") {
+                return@lazy clazz
+            }
+        }
+        throw NoClassDefFoundError("android.net.IpConfiguration.IpAssignment")
     }
 
     var ipAssignment: IpAssignment
-        get() = IpAssignment.valueOf(ipAssClass.getField("ipAssignment").get(conf).toString())
+        get() = IpAssignment.valueOf(IpConfiguration::class.java.getDeclaredField(
+            "ipAssignment"
+        ).get(conf).toString())
         set(value) {
-            ipAssClass.getMethod("valueOf", String::class.java)
-                .invoke(null, value.name)
+            IpConfiguration::class.java.getDeclaredField("ipAssignment").set(
+                conf, ipAssClass.getMethod("valueOf", String::class.java)
+                    .invoke(null, value.name)
+            )
         }
 
-    var staticIpConfiguration: StaticIpConfiguration
-        get() = ipAssClass.getField("staticIpConfiguration").get(conf)
-                as StaticIpConfiguration
+    var staticIpConfiguration: StaticIpConfigurationWrapper
+        get() = StaticIpConfigurationWrapper(
+            IpConfiguration::class.java.getDeclaredField(
+                "staticIpConfiguration"
+            ).get(conf) as StaticIpConfiguration
+        )
         set(value) {
-            ipAssClass.getField("staticIpConfiguration").set(conf, value)
+            IpConfiguration::class.java
+                .getDeclaredField("staticIpConfiguration")
+                .set(conf, value.conf)
         }
 
     enum class IpAssignment {
@@ -53,4 +70,38 @@ class IpConfigurationWrapper(
         DHCP,
         UNASSIGNED;
     }
+}
+
+class StaticIpConfigurationWrapper(
+    internal val conf: StaticIpConfiguration
+) {
+    var ipAddress: LinkAddress
+        get() = StaticIpConfiguration::class.java
+            .getDeclaredField("ipAddress")
+            .get(conf) as LinkAddress
+        set(value) {
+            StaticIpConfiguration::class.java
+                .getDeclaredField("ipAddress")
+                .set(conf, value)
+        }
+
+    var gateway: InetAddress?
+        get() = StaticIpConfiguration::class.java
+            .getDeclaredField("gateway")
+            .get(conf) as InetAddress?
+        set(value) {
+            StaticIpConfiguration::class.java
+                .getDeclaredField("gateway")
+                .set(conf, value)
+        }
+
+    var dnsServers: List<InetAddress>
+        get() = StaticIpConfiguration::class.java
+            .getDeclaredField("dnsServers")
+            .get(conf) as List<InetAddress>
+        set(value) {
+            StaticIpConfiguration::class.java
+                .getDeclaredField("dnsServers")
+                .set(conf, value)
+        }
 }
