@@ -1,9 +1,10 @@
+@file:SuppressLint("NewApi", "PrivateApi")
+
 package io.github.sgpublic.android.core.sysservice
 
 import android.annotation.SuppressLint
+import android.net.IpConfiguration
 import android.net.StaticIpConfiguration
-import android.os.Build
-import androidx.annotation.RequiresApi
 
 /**
  * @author Madray Haven
@@ -12,17 +13,44 @@ import androidx.annotation.RequiresApi
 class EthernetManagerWrapper internal constructor(
     private val ethernet: Any
 ) {
-    @SuppressLint("PrivateApi")
     private val EthernetManagerClass: Class<*> =
         Class.forName("android.net.EthernetManager")
 
-    @get:RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    @set:RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    var configuration: StaticIpConfiguration
-        get() = EthernetManagerClass.getMethod("getStaticIpConfiguration")
-            .invoke(ethernet) as StaticIpConfiguration
+    var configuration: IpConfigurationWrapper
+        get() = IpConfigurationWrapper(
+            EthernetManagerClass.getMethod("getConfiguration")
+                .invoke(ethernet) as IpConfiguration
+        )
         set(value) {
-            EthernetManagerClass.getMethod("setStaticIpConfiguration", StaticIpConfiguration::class.java)
-                .invoke(ethernet, value)
+            EthernetManagerClass.getMethod("setConfiguration", IpConfiguration::class.java)
+                .invoke(ethernet, value.conf)
         }
+}
+
+class IpConfigurationWrapper(
+    internal val conf: IpConfiguration
+) {
+    private val ipAssClass: Class<*> by lazy {
+        Class.forName("android.net.IpConfiguration.IpAssignment")
+    }
+
+    var ipAssignment: IpAssignment
+        get() = IpAssignment.valueOf(ipAssClass.getField("ipAssignment").get(conf).toString())
+        set(value) {
+            ipAssClass.getMethod("valueOf", String::class.java)
+                .invoke(null, value.name)
+        }
+
+    var staticIpConfiguration: StaticIpConfiguration
+        get() = ipAssClass.getField("staticIpConfiguration").get(conf)
+                as StaticIpConfiguration
+        set(value) {
+            ipAssClass.getField("staticIpConfiguration").set(conf, value)
+        }
+
+    enum class IpAssignment {
+        STATIC,
+        DHCP,
+        UNASSIGNED;
+    }
 }
