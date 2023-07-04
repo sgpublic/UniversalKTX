@@ -7,7 +7,7 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ComponentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -23,7 +23,7 @@ import kotlin.math.abs
  * @Date 2023/5/30 15:41
  */
 abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
-    private val context: AppCompatActivity
+    private val context: ComponentActivity
 ): LifecycleOwner, Loggable, ContextResource {
     private val parent: ViewGroup by lazy {
         context.window.decorView.findViewById(android.R.id.content)
