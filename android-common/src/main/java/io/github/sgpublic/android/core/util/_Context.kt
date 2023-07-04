@@ -1,6 +1,7 @@
 package io.github.sgpublic.android.core.util
 
 import android.R
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources.Theme
@@ -14,20 +15,16 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
-import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.Lifecycle
 import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.core.sysservice.sysConnectivityManager
 
 private val contexts = LinkedHashSet<Context>()
 
-fun AppCompatActivity.register() {
+fun Activity.register() {
     (this as Context).register()
 }
 
-fun AppCompatActivity.unregister() {
+fun Activity.unregister() {
     (this as Context).unregister()
 }
 
@@ -46,10 +43,11 @@ fun Context.unregister() {
 fun Context.finishAllActivity() {
     val tmp = ArrayList(contexts)
     for (context in tmp){
-        if (context !is AppCompatActivity) {
+        if (context !is Activity) {
             continue
         }
-        if (context.lifecycle.currentState != Lifecycle.State.DESTROYED){
+
+        if (!context.isDestroyed){
             context.finish()
         }
     }
@@ -59,10 +57,10 @@ fun Context.finishAllActivity() {
 fun Context.finishOtherActivity() {
     val tmp = ArrayList(contexts)
     for (context in tmp) {
-        if (context !is AppCompatActivity || context == this) {
+        if (context !is Activity || context == this) {
             continue
         }
-        if (context.lifecycle.currentState != Lifecycle.State.DESTROYED){
+        if (!context.isDestroyed){
             context.finish()
         }
     }
@@ -78,7 +76,7 @@ interface ContextResource: LocalBroadcastProvider {
 
     @ColorInt
     fun getColorRes(@ColorRes id: Int): Int {
-        return ResourcesCompat.getColor(getContext().resources, id, getContext().theme)
+        return getContext().resources.getColor(id, getContext().theme)
     }
 
     fun getStringRes(@StringRes id: Int, vararg args: Any): String {
@@ -86,7 +84,7 @@ interface ContextResource: LocalBroadcastProvider {
     }
 
     fun getDrawableRes(@DrawableRes id: Int): Drawable? {
-        return ResourcesCompat.getDrawable(getContext().resources, id, getContext().theme)
+        return getContext().getDrawable(id)
     }
 
     fun getDrawableAttr(@AttrRes id: Int): Drawable {
@@ -122,7 +120,7 @@ interface ContextResource: LocalBroadcastProvider {
 }
 
 inline fun <reified T: Any> ContextResource.getSysService(): T {
-    return getContext().getSystemService()!!
+    return getContext().getSystemService(T::class.java)
 }
 
 val ContextResource.selectableItemBackgroundBorderless: Drawable get() = getDrawableAttr(

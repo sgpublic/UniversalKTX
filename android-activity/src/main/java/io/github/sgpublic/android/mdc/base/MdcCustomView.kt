@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.mdc.ui
+package io.github.sgpublic.android.mdc.base
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -15,7 +15,7 @@ import io.github.sgpublic.android.core.util.ContextResource
  * @author Madray Haven
  * @Date 2023/4/6 11:24
  */
-abstract class BaseCustomView<VB : ViewBinding> @JvmOverloads constructor(
+abstract class MdcCustomView<VB : ViewBinding> @JvmOverloads constructor(
     context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ViewGroup(context, attrs, defStyleAttr), ContextResource {
     private var _vb: VB? = null

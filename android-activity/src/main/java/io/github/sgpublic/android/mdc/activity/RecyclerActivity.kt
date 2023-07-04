@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.mdc.ui
+package io.github.sgpublic.android.mdc.activity
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
@@ -6,6 +6,7 @@ import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.android.mdc.base.MdcVMActivity
 import io.github.sgpublic.android.common.databinding.ActivityRecyclerBinding
 import io.github.sgpublic.android.core.util.viewBinding
+import io.github.sgpublic.android.mdc.ui.ArrayRecyclerAdapter
 
 /**
  *

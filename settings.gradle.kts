@@ -21,7 +21,7 @@ include(":kotlin-common")
 include(":kotlin-forest")
 include(":kotlin-logback")
 
+include(":android-activity")
 include(":android-common")
 include(":android-logback")
 include(":android-forest")
-include(":android-widget")

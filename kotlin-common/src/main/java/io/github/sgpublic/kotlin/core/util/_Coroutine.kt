@@ -1,4 +1,4 @@
-package io.github.sgpublic.android.core.util
+package io.github.sgpublic.kotlin.core.util
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

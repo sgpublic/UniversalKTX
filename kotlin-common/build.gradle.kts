@@ -21,4 +21,6 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     /* https://github.com/square/okhttp */
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    /* https://github.com/Kotlin/kotlinx.coroutines */
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
 }
