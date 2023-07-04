@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.StyleableRes
-import androidx.core.content.res.use
 import androidx.viewbinding.ViewBinding
 import io.github.sgpublic.android.core.util.ContextResource
 
