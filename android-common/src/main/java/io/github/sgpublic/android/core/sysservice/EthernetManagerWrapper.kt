@@ -29,8 +29,8 @@ class EthernetManagerWrapper internal constructor(
         }
 }
 
-class IpConfigurationWrapper internal constructor(
-    internal val conf: IpConfiguration
+class IpConfigurationWrapper(
+    internal val conf: IpConfiguration = IpConfiguration::class.java.newInstance()
 ) {
     private val ipAssClass: Class<*> by lazy {
         val ipConf = Class.forName("android.net.IpConfiguration")
@@ -53,16 +53,18 @@ class IpConfigurationWrapper internal constructor(
             )
         }
 
-    var staticIpConfiguration: StaticIpConfigurationWrapper
-        get() = StaticIpConfigurationWrapper(
-            IpConfiguration::class.java.getDeclaredField(
-                "staticIpConfiguration"
-            ).get(conf) as StaticIpConfiguration
-        )
+    var staticIpConfiguration: StaticIpConfigurationWrapper?
+        get() {
+            return StaticIpConfigurationWrapper(
+                IpConfiguration::class.java.getDeclaredField(
+                    "staticIpConfiguration"
+                ).get(conf) as StaticIpConfiguration? ?: return null
+            )
+        }
         set(value) {
             IpConfiguration::class.java
                 .getDeclaredField("staticIpConfiguration")
-                .set(conf, value.conf)
+                .set(conf, value?.conf)
         }
 
     enum class IpAssignment {
@@ -73,7 +75,7 @@ class IpConfigurationWrapper internal constructor(
 }
 
 class StaticIpConfigurationWrapper(
-    internal val conf: StaticIpConfiguration
+    internal val conf: StaticIpConfiguration = StaticIpConfiguration::class.java.newInstance()
 ) {
     var ipAddress: LinkAddress
         get() = StaticIpConfiguration::class.java
