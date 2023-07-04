@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import io.github.sgpublic.android.mdc.base.MdcActivity
-import io.github.sgpublic.android.common.databinding.ActivitySplashBinding
+import io.github.sgpublic.android.activity.databinding.ActivitySplashBinding
 import io.github.sgpublic.android.core.util.viewBinding
 
 

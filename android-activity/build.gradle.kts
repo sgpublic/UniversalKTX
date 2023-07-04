@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.sgpublic.android.common"
+    namespace = "io.github.sgpublic.android.activity"
     compileSdk = 33
 
     defaultConfig {

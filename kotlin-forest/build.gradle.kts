@@ -16,7 +16,9 @@ java {
 
 dependencies {
     api(project(":kotlin-common"))
-    api(project(":kotlin-logback"))
+    api(project(":kotlin-logback")){
+        exclude("ch.qos.logback", "logback-classic")
+    }
 
     // forest 声明式网络请求框架
     /* https://forest.dtflyx.com/pages/1.5.x/intro/ */

@@ -29,7 +29,7 @@ class EthernetManagerWrapper internal constructor(
         }
 }
 
-class IpConfigurationWrapper(
+class IpConfigurationWrapper internal constructor(
     internal val conf: IpConfiguration
 ) {
     private val ipAssClass: Class<*> by lazy {
