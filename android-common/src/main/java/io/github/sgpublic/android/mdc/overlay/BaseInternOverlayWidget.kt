@@ -1,5 +1,6 @@
 package io.github.sgpublic.android.mdc.overlay
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -23,7 +24,7 @@ import kotlin.math.abs
  * @Date 2023/5/30 15:41
  */
 abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
-    private val context: ComponentActivity
+    private val context: Activity
 ): LifecycleOwner, Loggable, ContextResource {
     private val parent: ViewGroup by lazy {
         context.window.decorView.findViewById(android.R.id.content)

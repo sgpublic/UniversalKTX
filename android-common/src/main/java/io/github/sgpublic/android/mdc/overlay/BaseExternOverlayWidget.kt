@@ -1,6 +1,7 @@
 package io.github.sgpublic.android.mdc.overlay
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ComponentActivity
@@ -14,7 +15,7 @@ import io.github.sgpublic.kotlin.util.Loggable
  */
 abstract class BaseExternOverlayWidget<VB: ViewBinding>
 @RequiresPermission(Manifest.permission.SYSTEM_ALERT_WINDOW) constructor(
-    protected val context: ComponentActivity,
+    protected val context: Activity,
 ): LifecycleOwner, Loggable {
 //    protected abstract val ViewBinding: VB
 //    protected val LayoutParams = WindowManager.LayoutParams().also {
