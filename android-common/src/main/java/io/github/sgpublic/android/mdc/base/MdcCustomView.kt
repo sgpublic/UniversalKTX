@@ -70,5 +70,12 @@ fun ContextResource.useStyleRes(
     @StyleableRes styledRes: IntArray,
     block: TypedArray.() -> Unit
 ) {
-    getContext().obtainStyledAttributes(attrs, styledRes).use(block)
+    val typedArray = getContext().obtainStyledAttributes(attrs, styledRes)
+    @Suppress("USELESS_IS_CHECK")
+    if (typedArray is AutoCloseable) {
+        typedArray.use(block)
+    } else {
+        block.invoke(typedArray)
+        typedArray.recycle()
+    }
 }
