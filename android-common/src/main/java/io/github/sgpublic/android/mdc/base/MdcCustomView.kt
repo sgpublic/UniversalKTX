@@ -40,7 +40,7 @@ abstract class MdcCustomView<VB : ViewBinding> @JvmOverloads constructor(
      * @see android.content.res.TypedArray
      */
     protected fun useStyleRes(@StyleableRes styledRes: IntArray, block: TypedArray.() -> Unit) {
-        context.obtainStyledAttributes(attrs, styledRes).use(block)
+        useStyleRes(attrs, styledRes, block)
     }
 
     @CallSuper
