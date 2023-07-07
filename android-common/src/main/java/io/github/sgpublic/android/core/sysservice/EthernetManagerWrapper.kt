@@ -97,10 +97,10 @@ class StaticIpConfigurationWrapper(
                 .set(conf, value)
         }
 
-    var dnsServers: List<InetAddress>
+    var dnsServers: ArrayList<InetAddress>
         get() = StaticIpConfiguration::class.java
             .getDeclaredField("dnsServers")
-            .get(conf) as List<InetAddress>
+            .get(conf) as ArrayList<InetAddress>
         set(value) {
             StaticIpConfiguration::class.java
                 .getDeclaredField("dnsServers")
