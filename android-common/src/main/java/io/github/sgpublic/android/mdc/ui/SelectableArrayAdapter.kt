@@ -1,5 +1,6 @@
 package io.github.sgpublic.android.mdc.ui
 
+import android.content.Context
 import androidx.annotation.CallSuper
 import androidx.annotation.ColorRes
 import androidx.viewbinding.ViewBinding
@@ -44,7 +45,7 @@ interface MultiSelectable<ItemT: Any> {
 //    override fun invokeOnChangeSelectMode(mode: Boolean) {
 //        onChangeSelectMode.invoke(mode)
 //    }
-    
+
     fun invokeOnChangeSelectMode(mode: Boolean)
 
     fun addSelection(pos: Int) {

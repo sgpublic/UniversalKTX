@@ -56,7 +56,7 @@ abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<Ite
 
     final override fun onBindViewHolder(holder: ViewBindingHolder<VB>, position: Int) {
         val data = data[position]
-        onBindViewHolder(holder.getContext(), holder.ViewBinding, data)
+        onBindViewHolder(holder.getContext(), holder.ViewBinding, data, position)
         getClickableView(holder.ViewBinding)?.setOnClickListener {
             onClick.invoke(data)
         }
@@ -69,6 +69,6 @@ abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<Ite
     open fun getLongClickableView(ViewBinding: VB): View? = null
 
     abstract fun onCreateViewBinding(inflater: LayoutInflater, parent: ViewGroup): VB
-    abstract fun onBindViewHolder(context: Context, ViewBinding: VB, data: ItemT)
+    abstract fun onBindViewHolder(context: Context, ViewBinding: VB, data: ItemT, position: Int)
     final override fun getItemCount() = data.size
 }
