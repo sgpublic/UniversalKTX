@@ -102,8 +102,8 @@ class StaticIpConfigurationWrapper(
             .getDeclaredField("dnsServers")
             .get(conf) as ArrayList<InetAddress>
         set(value) {
-            StaticIpConfiguration::class.java
-                .getDeclaredField("dnsServers")
-                .set(conf, value)
+            val list = dnsServers
+            list.clear()
+            list.addAll(value)
         }
 }

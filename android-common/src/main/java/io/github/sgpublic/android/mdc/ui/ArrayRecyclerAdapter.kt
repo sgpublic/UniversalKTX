@@ -38,13 +38,13 @@ abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<Ite
 
     fun getItem(position: Int): ItemT = data[position]
 
-    private var onClick: (ItemT) -> Unit = { }
-    open fun setOnItemClickListener(onClick: (ItemT) -> Unit) {
+    private var onClick: (ItemT, Int) -> Unit = { _, _ ->  }
+    open fun setOnItemClickListener(onClick: (ItemT, Int) -> Unit) {
         this.onClick = onClick
     }
 
-    private var onLongClick: (ItemT) -> Boolean = { false }
-    fun setOnItemLongClickListener(onLongClick: (ItemT) -> Boolean) {
+    private var onLongClick: (ItemT, Int) -> Boolean = { _, _ -> false }
+    fun setOnItemLongClickListener(onLongClick: (ItemT, Int) -> Boolean) {
         this.onLongClick = onLongClick
     }
 
@@ -58,10 +58,10 @@ abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<Ite
         val data = data[position]
         onBindViewHolder(holder.getContext(), holder.ViewBinding, data, position)
         getClickableView(holder.ViewBinding)?.setOnClickListener {
-            onClick.invoke(data)
+            onClick.invoke(data, position)
         }
         getLongClickableView(holder.ViewBinding)?.setOnLongClickListener {
-            onLongClick.invoke(data)
+            onLongClick.invoke(data, position)
         }
     }
 
