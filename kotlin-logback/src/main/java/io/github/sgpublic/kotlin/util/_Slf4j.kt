@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 
 interface Loggable {
     val Any.log: Logger get() = LoggerFactory.getLogger(
-        if (!Loggable::class.isCompanion) javaClass
+        if (!this@Loggable::class.isCompanion) javaClass
         else javaClass.enclosingClass
     )
 }

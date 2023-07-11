@@ -97,12 +97,14 @@ class StaticIpConfigurationWrapper(
                 .set(conf, value)
         }
 
-    var dnsServers: ArrayList<InetAddress>
-        get() = StaticIpConfiguration::class.java
-            .getDeclaredField("dnsServers")
-            .get(conf) as ArrayList<InetAddress>
+    private val mDnsServers get() = StaticIpConfiguration::class.java
+        .getDeclaredField("dnsServers")
+        .get(conf) as ArrayList<InetAddress>
+
+    var dnsServers: List<InetAddress>
+        get() = mDnsServers.clone() as List<InetAddress>
         set(value) {
-            dnsServers.let {
+            mDnsServers.let {
                 it.clear()
                 it.addAll(value)
             }

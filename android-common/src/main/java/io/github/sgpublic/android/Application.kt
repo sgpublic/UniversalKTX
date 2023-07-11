@@ -61,8 +61,7 @@ fun <T: Application>  T.listenException() {
  */
 fun <T: Enum<T>> io.github.sgpublic.android.Application.initNotifyChannel(enum: Class<T>) {
     NotifyChannelEnum.realInit(Application, enum)
-    io.github.sgpublic.android.Application.ApplicationContext
-        .registerReceiver(object : BroadcastReceiver() {
+    registerReceiver(object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             NotifyChannelEnum.realInit(Application, enum)
         }
