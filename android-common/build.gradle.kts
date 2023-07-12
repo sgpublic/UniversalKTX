@@ -45,7 +45,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.0")
     implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
 
-    val lifecycle = "2.2.0"
+    val lifecycle = "2.4.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle")
