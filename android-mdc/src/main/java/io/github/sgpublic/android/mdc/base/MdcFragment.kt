@@ -95,8 +95,9 @@ abstract class MdcFragment<VB: ViewBinding>(
         return false
     }
 
-    override val onBackPressedDispatcher: OnBackPressedDispatcher
-        get() = context.onBackPressedDispatcher
+    override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
+        return context.onBackPressedDispatcher
+    }
 
     class Factory(private val context: AppCompatActivity): FragmentFactory(), Loggable {
         override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
