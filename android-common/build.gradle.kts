@@ -41,13 +41,12 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation("androidx.activity:activity-ktx:1.1.0")
-    implementation("androidx.fragment:fragment-ktx:1.1.0")
+    implementation("androidx.appcompat:appcompat:1.5.1")
 
     implementation("androidx.recyclerview:recyclerview:1.3.0")
     implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
 
-    val lifecycle = "2.2.0"
+    val lifecycle = "2.5.1"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle")

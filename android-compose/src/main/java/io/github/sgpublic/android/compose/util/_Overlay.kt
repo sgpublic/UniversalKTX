@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewTreeViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
-import androidx.savedstate.ViewTreeSavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
 /**
  * @author Madray Haven
@@ -22,16 +22,15 @@ import androidx.savedstate.ViewTreeSavedStateRegistryOwner
 
 fun OverlayComposeView(context: Context): ComposeView {
     val composeView = ComposeView(context)
-    val lifecycle = object : LifecycleOwner, SavedStateRegistryOwner, ViewModelStoreOwner {
+    val lifecycle = object : SavedStateRegistryOwner, ViewModelStoreOwner {
         private val lifecycleRegex = LifecycleRegistry(this)
         override fun getLifecycle(): Lifecycle {
             return lifecycleRegex
         }
         private val savedStateRegistryController =
             SavedStateRegistryController.create(this)
-        override fun getSavedStateRegistry(): SavedStateRegistry {
-            return savedStateRegistryController.savedStateRegistry
-        }
+        override val savedStateRegistry: SavedStateRegistry
+            get() = savedStateRegistryController.savedStateRegistry
         private val mViewModelStore = ViewModelStore()
         override fun getViewModelStore(): ViewModelStore {
             return mViewModelStore
@@ -49,7 +48,7 @@ fun OverlayComposeView(context: Context): ComposeView {
 
     ViewTreeLifecycleOwner.set(composeView, lifecycle)
     ViewTreeViewModelStoreOwner.set(composeView, lifecycle)
-    ViewTreeSavedStateRegistryOwner.set(composeView, lifecycle)
+    composeView.setViewTreeSavedStateRegistryOwner(lifecycle)
 
     return composeView
 }
