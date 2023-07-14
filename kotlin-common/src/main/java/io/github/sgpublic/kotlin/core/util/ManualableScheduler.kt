@@ -11,7 +11,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @Date 2023/4/12 13:08
  */
 class ManualableScheduler(
-    private val delay: Long,
+    private val tick: Long,
+    private val delay: Long = 0,
     private var onInserted: (() -> Unit)? = null,
     private var task: (() -> Unit)? = null,
 ) {
@@ -26,7 +27,7 @@ class ManualableScheduler(
     fun start() {
         synchronized(isRunning) {
             if (isRunning.compareAndSet(false, true)) {
-                scheduleNextTask(0)
+                scheduleNextTask(delay)
             }
         }
     }
@@ -56,7 +57,7 @@ class ManualableScheduler(
     }
 
     @Synchronized
-    private fun scheduleNextTask(delay: Long = this.delay) {
+    private fun scheduleNextTask(delay: Long = this.tick) {
         future = executor.schedule(::runTask, delay, TimeUnit.MILLISECONDS)
     }
 
