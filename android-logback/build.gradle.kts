@@ -49,5 +49,5 @@ dependencies {
     // 适用于 Android 的 logback：
     // https://github.com/tony19/logback-android
     // 配置文件位于 /assets/logback.xml
-    implementation("com.github.tony19:logback-android:3.0.0")
+    api("com.github.tony19:logback-android:3.0.0")
 }

@@ -22,13 +22,6 @@ val Context.sysActivityManager: ActivityManager get() {
             as ActivityManager
 }
 
-val Context.sysEthernetManager: EthernetManagerWrapper get() {
-    val name = Context::class.java
-        .getField("ETHERNET_SERVICE")
-        .get(null) as String
-    return EthernetManagerWrapper(getSystemService(name))
-}
-
 val Context.sysInputMethodManager: InputMethodManager get() {
     return getSystemService(Context.INPUT_METHOD_SERVICE)
             as InputMethodManager
