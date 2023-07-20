@@ -3,6 +3,7 @@ package io.github.sgpublic.kotlin.core.forest
 import com.dtflys.forest.exceptions.ForestNetworkException
 import com.dtflys.forest.exceptions.ForestRuntimeException
 import com.google.gson.JsonElement
+import java.net.UnknownHostException
 import javax.net.ssl.SSLException
 
 /**
@@ -18,15 +19,21 @@ class UniktxForestException : Exception {
 }
 
 fun Exception.toUniktxForestException(): UniktxForestException {
-    if (this is ForestNetworkException) {
-        return UniktxForestException("网络错误：$statusCode", this)
-    } else if (this is ForestRuntimeException) {
-        val cause = cause
-        if (cause is SSLException) {
-            return UniktxForestException("SSL 握手错误，请确认 SSL 证书可用性")
+    when (this) {
+        is ForestNetworkException -> {
+            return UniktxForestException("网络错误：$statusCode", this)
         }
-    } else if (this is ClassCastException) {
-        return UniktxForestException("疑似服务器错误，请联系管理员", this)
+
+        is ForestRuntimeException -> {
+            when (cause) {
+                is SSLException -> return UniktxForestException("SSL 握手错误，请确认 SSL 证书可用性")
+                is UnknownHostException -> return UniktxForestException("请检查网络连接")
+            }
+        }
+
+        is ClassCastException -> {
+            return UniktxForestException("疑似服务器错误，请联系管理员", this)
+        }
     }
     return UniktxForestException("未知错误", this)
 }
