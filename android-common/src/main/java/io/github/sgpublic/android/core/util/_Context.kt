@@ -1,5 +1,6 @@
 package io.github.sgpublic.android.core.util
 
+import android.Manifest
 import android.R
 import android.app.Activity
 import android.content.Context
@@ -7,6 +8,7 @@ import android.content.res.Configuration
 import android.content.res.Resources.Theme
 import android.graphics.drawable.Drawable
 import android.net.NetworkCapabilities
+import android.provider.Settings
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -17,6 +19,7 @@ import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
 import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.core.sysservice.sysConnectivityManager
+import io.github.sgpublic.kotlin.util.log
 
 private val contexts = LinkedHashSet<Context>()
 
@@ -134,7 +137,7 @@ enum class NetworkType {
     WIFI, CELLULAR, ETHERNET, BLUETOOTH, UNKNOWN
 }
 
-@get:RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+@get:RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
 val Context.currentNetworkType: Set<NetworkType> get() {
     val actNw = sysConnectivityManager.getNetworkCapabilities(
         sysConnectivityManager.activeNetwork
