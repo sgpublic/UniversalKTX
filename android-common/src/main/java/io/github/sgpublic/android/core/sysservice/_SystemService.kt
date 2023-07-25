@@ -2,6 +2,7 @@ package io.github.sgpublic.android.core.sysservice
 
 import android.app.ActivityManager
 import android.content.Context
+import android.media.AudioManager
 import android.net.ConnectivityManager
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -30,4 +31,9 @@ val Context.sysInputMethodManager: InputMethodManager get() {
 val Context.sysWindowManager: WindowManager get() {
     return getSystemService(Context.WINDOW_SERVICE)
             as WindowManager
+}
+
+val Context.sysAudioManager: AudioManager get() {
+    return getSystemService(Context.AUDIO_SERVICE)
+            as AudioManager
 }
