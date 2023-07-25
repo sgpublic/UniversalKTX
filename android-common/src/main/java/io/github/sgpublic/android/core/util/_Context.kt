@@ -8,7 +8,6 @@ import android.content.res.Configuration
 import android.content.res.Resources.Theme
 import android.graphics.drawable.Drawable
 import android.net.NetworkCapabilities
-import android.provider.Settings
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -19,7 +18,7 @@ import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
 import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.core.sysservice.sysConnectivityManager
-import io.github.sgpublic.kotlin.util.log
+import androidx.core.content.res.use
 
 private val contexts = LinkedHashSet<Context>()
 

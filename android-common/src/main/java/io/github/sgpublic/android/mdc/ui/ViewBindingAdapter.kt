@@ -16,4 +16,8 @@ open class ViewBindingHolder<VB: ViewBinding>(val ViewBinding: VB):
     final override fun getContext(): Context = ViewBinding.root.context
 }
 
+val <T: ViewBinding> T.asViewBindingHolder: ViewBindingHolder<T> get() {
+    return ViewBindingHolder(this)
+}
+
 typealias ViewBindingRecyclerAdapter = RecyclerView.Adapter<ViewBindingHolder<*>>
