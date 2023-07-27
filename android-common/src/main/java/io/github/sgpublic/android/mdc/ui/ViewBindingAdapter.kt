@@ -13,7 +13,9 @@ import io.github.sgpublic.android.core.util.ContextResource
 open class ViewBindingHolder<VB: ViewBinding>(val ViewBinding: VB):
     RecyclerView.ViewHolder(ViewBinding.root),
     ContextResource {
-    final override fun getContext(): Context = ViewBinding.root.context
+    final override fun getContext(): Context {
+        return ViewBinding.root.context
+    }
 }
 
 val <T: ViewBinding> T.asViewBindingHolder: ViewBindingHolder<T> get() {

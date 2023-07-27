@@ -370,34 +370,34 @@ interface NotifyChannelEnum {
             return this
         }
 
+        @Suppress("DEPRECATION")
         @Deprecated("Deprecated in Java")
         override fun setNotificationSilent(): Builder {
             super.setNotificationSilent()
             return this
         }
 
+        @Suppress("DEPRECATION")
         @Deprecated("Deprecated in Java")
         override fun setTicker(tickerText: CharSequence?, views: RemoteViews?): Builder {
             super.setTicker(tickerText, views)
             return this
         }
     }
+}
 
-    companion object {
-        internal fun <T: Enum<T>> realInit(context: ContextResource, enum: Class<T>) {
-            val manager: NotificationManagerCompat = NotificationManagerCompat.from(context.getContext())
-            @Suppress("UNCHECKED_CAST")
-            val invoke = enum.getMethod("values")
-                .invoke(null) as Array<NotifyChannelEnum>
-            for (value in invoke) {
-                val channel: NotificationChannelCompat.Builder =
-                    NotificationChannelCompat.Builder(value.name, value.importance)
-                channel.setLightsEnabled(value.enableLights)
-                channel.setShowBadge(value.showBadge)
-                channel.setName(context.getStringRes(value.channelName))
-                channel.setDescription(context.getStringRes(value.channelDesc))
-                manager.createNotificationChannel(channel.build())
-            }
-        }
+internal fun <T: Enum<T>> ContextResource.realInitNotify(enum: Class<T>) {
+    val manager: NotificationManagerCompat = NotificationManagerCompat.from(getContext())
+    @Suppress("UNCHECKED_CAST")
+    val invoke = enum.getMethod("values")
+        .invoke(null) as Array<NotifyChannelEnum>
+    for (value in invoke) {
+        val channel: NotificationChannelCompat.Builder =
+            NotificationChannelCompat.Builder(value.name, value.importance)
+        channel.setLightsEnabled(value.enableLights)
+        channel.setShowBadge(value.showBadge)
+        channel.setName(getStringRes(value.channelName))
+        channel.setDescription(getStringRes(value.channelDesc))
+        manager.createNotificationChannel(channel.build())
     }
 }

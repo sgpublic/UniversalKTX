@@ -5,6 +5,7 @@ import android.R
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.graphics.drawable.Drawable
 import android.net.NetworkCapabilities
@@ -16,14 +17,14 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
-import io.github.sgpublic.android.Application
-import io.github.sgpublic.android.core.sysservice.sysConnectivityManager
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.res.use
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import io.github.sgpublic.android.Application
+import io.github.sgpublic.android.core.sysservice.sysConnectivityManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 private val contexts = LinkedHashSet<Context>()
 
@@ -79,7 +80,12 @@ val Context.isNightMode: Boolean get() = resources.configuration.uiMode and
 
 
 interface ContextResource: LocalBroadcastProvider {
-    override fun getContext(): Context
+    fun getTheme(): Theme {
+        return getContext().theme
+    }
+    fun getResource(): Resources {
+        return getContext().resources
+    }
 
     val Int.dp: Int get() = toFloat().dp.toInt()
     val Float.dp: Float get() = TypedValue.applyDimension(
@@ -98,7 +104,7 @@ interface ContextResource: LocalBroadcastProvider {
         }
     }
 
-    fun LifecycleOwner.Toast(@StringRes content: Int, message: String?, code: Int?) {
+    fun LifecycleOwner.Toast(@StringRes content: Int, message: String? = null, code: Int? = null) {
         Toast(getContext().getString(content)
                 + ("".takeIf { message == null } ?: "，$message")
                 + ("".takeIf { code == null } ?: " (${code})"))
@@ -115,7 +121,7 @@ fun ContextResource.getStringRes(@StringRes id: Int, vararg args: Any): String {
 }
 
 fun ContextResource.getDrawableRes(@DrawableRes id: Int): Drawable? {
-    return getContext().getDrawable(id)
+    return ResourcesCompat.getDrawable(getContext().resources, id, getTheme())
 }
 
 fun ContextResource.getDrawableAttr(@AttrRes id: Int): Drawable {
@@ -128,10 +134,6 @@ fun ContextResource.getDrawableAttr(@AttrRes id: Int): Drawable {
 fun ContextResource.getColorAttr(@AttrRes id: Int) = TypedValue().also {
     getTheme().resolveAttribute(id, it, true)
 }.data
-
-fun ContextResource.getTheme(): Theme {
-    return getContext().theme
-}
 
 fun ContextResource.getDimenRes(@DimenRes id: Int): Float {
     return getContext().resources.getDimension(id)

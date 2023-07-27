@@ -2,10 +2,7 @@ package io.github.sgpublic.android.core.util
 
 import android.content.Context
 import androidx.annotation.StringRes
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
@@ -22,7 +19,7 @@ suspend fun Context.Toast(content: String) {
     }
 }
 
-suspend fun Context.Toast(@StringRes content: Int, message: String?, code: Int?) {
+suspend fun Context.Toast(@StringRes content: Int, message: String? = null, code: Int? = null) {
     Toast(getString(content)
             + ("".takeIf { message == null } ?: "，$message")
             + ("".takeIf { code == null } ?: " (${code})"))
