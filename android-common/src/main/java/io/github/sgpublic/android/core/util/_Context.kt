@@ -21,6 +21,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.res.use
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.core.sysservice.sysConnectivityManager
 import kotlinx.coroutines.Dispatchers
@@ -79,7 +80,9 @@ val Context.isNightMode: Boolean get() = resources.configuration.uiMode and
         Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
 
-interface ContextResource: LocalBroadcastProvider {
+interface ContextResource {
+    fun getContext(): Context
+
     val Int.dp: Int get() = toFloat().dp.toInt()
     val Float.dp: Float get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP, this, getContext().resources.displayMetrics)
@@ -102,6 +105,10 @@ interface ContextResource: LocalBroadcastProvider {
                 + ("".takeIf { message == null } ?: "，$message")
                 + ("".takeIf { code == null } ?: " (${code})"))
     }
+}
+
+fun ContextResource.getLocalBroadcastManager(): LocalBroadcastManager {
+    return LocalBroadcastManager.getInstance(getContext())
 }
 
 fun ContextResource.getTheme(): Theme {
