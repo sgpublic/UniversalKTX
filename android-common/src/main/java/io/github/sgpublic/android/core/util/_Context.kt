@@ -80,13 +80,6 @@ val Context.isNightMode: Boolean get() = resources.configuration.uiMode and
 
 
 interface ContextResource: LocalBroadcastProvider {
-    fun getTheme(): Theme {
-        return getContext().theme
-    }
-    fun getResource(): Resources {
-        return getContext().resources
-    }
-
     val Int.dp: Int get() = toFloat().dp.toInt()
     val Float.dp: Float get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP, this, getContext().resources.displayMetrics)
@@ -110,6 +103,14 @@ interface ContextResource: LocalBroadcastProvider {
                 + ("".takeIf { code == null } ?: " (${code})"))
     }
 }
+
+fun ContextResource.getTheme(): Theme {
+    return getContext().theme
+}
+fun ContextResource.getResource(): Resources {
+    return getContext().resources
+}
+
 
 @ColorInt
 fun ContextResource.getColorRes(@ColorRes id: Int): Int {
