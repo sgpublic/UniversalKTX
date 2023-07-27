@@ -19,6 +19,11 @@ import androidx.annotation.StringRes
 import io.github.sgpublic.android.Application
 import io.github.sgpublic.android.core.sysservice.sysConnectivityManager
 import androidx.core.content.res.use
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private val contexts = LinkedHashSet<Context>()
 
@@ -76,42 +81,6 @@ val Context.isNightMode: Boolean get() = resources.configuration.uiMode and
 interface ContextResource: LocalBroadcastProvider {
     override fun getContext(): Context
 
-    @ColorInt
-    fun getColorRes(@ColorRes id: Int): Int {
-        return getContext().resources.getColor(id, getContext().theme)
-    }
-
-    fun getStringRes(@StringRes id: Int, vararg args: Any): String {
-        return getContext().getString(id, *args)
-    }
-
-    fun getDrawableRes(@DrawableRes id: Int): Drawable? {
-        return getContext().getDrawable(id)
-    }
-
-    fun getDrawableAttr(@AttrRes id: Int): Drawable {
-        getContext().obtainStyledAttributes(intArrayOf(id)).use {
-            return it.getDrawable(0)!!
-        }
-    }
-
-    @ColorInt
-    fun getColorAttr(@AttrRes id: Int) = TypedValue().also {
-        getTheme().resolveAttribute(id, it, true)
-    }.data
-
-    fun getTheme(): Theme {
-        return getContext().theme
-    }
-
-    fun getDimenRes(@DimenRes id: Int): Float {
-        return getContext().resources.getDimension(id)
-    }
-
-    fun getDimenResInt(@DimenRes id: Int): Int {
-        return getDimenRes(id).toInt()
-    }
-
     val Int.dp: Int get() = toFloat().dp.toInt()
     val Float.dp: Float get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP, this, getContext().resources.displayMetrics)
@@ -119,7 +88,59 @@ interface ContextResource: LocalBroadcastProvider {
     val Int.sp: Int get() = toFloat().sp.toInt()
     val Float.sp: Float get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP, this, getContext().resources.displayMetrics)
+
+    fun LifecycleOwner.Toast(content: String) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            android.widget.Toast.makeText(
+                getContext(), content,
+                if (content.length > 10) android.widget.Toast.LENGTH_LONG else android.widget.Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    fun LifecycleOwner.Toast(@StringRes content: Int, message: String?, code: Int?) {
+        Toast(getContext().getString(content)
+                + ("".takeIf { message == null } ?: "，$message")
+                + ("".takeIf { code == null } ?: " (${code})"))
+    }
 }
+
+@ColorInt
+fun ContextResource.getColorRes(@ColorRes id: Int): Int {
+    return getContext().resources.getColor(id, getContext().theme)
+}
+
+fun ContextResource.getStringRes(@StringRes id: Int, vararg args: Any): String {
+    return getContext().getString(id, *args)
+}
+
+fun ContextResource.getDrawableRes(@DrawableRes id: Int): Drawable? {
+    return getContext().getDrawable(id)
+}
+
+fun ContextResource.getDrawableAttr(@AttrRes id: Int): Drawable {
+    getContext().obtainStyledAttributes(intArrayOf(id)).use {
+        return it.getDrawable(0)!!
+    }
+}
+
+@ColorInt
+fun ContextResource.getColorAttr(@AttrRes id: Int) = TypedValue().also {
+    getTheme().resolveAttribute(id, it, true)
+}.data
+
+fun ContextResource.getTheme(): Theme {
+    return getContext().theme
+}
+
+fun ContextResource.getDimenRes(@DimenRes id: Int): Float {
+    return getContext().resources.getDimension(id)
+}
+
+fun ContextResource.getDimenResInt(@DimenRes id: Int): Int {
+    return getDimenRes(id).toInt()
+}
+
 
 inline fun <reified T: Any> ContextResource.getSysService(): T {
     return getContext().getSystemService(T::class.java)

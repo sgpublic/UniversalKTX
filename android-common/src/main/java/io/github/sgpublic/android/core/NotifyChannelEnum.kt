@@ -19,6 +19,7 @@ import androidx.core.content.LocusIdCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.graphics.drawable.IconCompat
 import io.github.sgpublic.android.core.util.ContextResource
+import io.github.sgpublic.android.core.util.getStringRes
 
 /**
  * 通知频道封装，利用枚举更优雅的实现通知管理，若需添加新的通知频道，在此添加即可。

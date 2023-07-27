@@ -6,9 +6,9 @@ import android.os.Parcelable
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.yanzhenjie.sofia.Sofia
+import io.github.sgpublic.android.Application.Companion.Toast
 import io.github.sgpublic.android.common.R
 import io.github.sgpublic.android.core.util.LayoutInflaterProvider
-import io.github.sgpublic.android.core.util.Toast
 import io.github.sgpublic.android.core.util.finishAllActivity
 import io.github.sgpublic.android.core.util.register
 import io.github.sgpublic.android.core.util.unregister

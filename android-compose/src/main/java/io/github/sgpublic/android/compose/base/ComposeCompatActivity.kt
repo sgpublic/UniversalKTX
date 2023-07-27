@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import io.github.sgpublic.android.Application.Companion.Toast
 import io.github.sgpublic.android.common.R
-import io.github.sgpublic.android.core.util.Toast
 import io.github.sgpublic.android.core.util.finishAllActivity
 import io.github.sgpublic.android.core.util.register
 import io.github.sgpublic.android.core.util.unregister
