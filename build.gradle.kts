@@ -9,7 +9,7 @@ plugins {
     kotlin("jvm") version kotlinVer apply false
     kotlin("plugin.parcelize") version kotlinVer apply false
 
-    val publishing = "1.0.0-alpha01"
+    val publishing = "1.0.0-alpha02"
     id("io.github.sgpublic.android-publish") version publishing apply false
     id("io.github.sgpublic.java-publish") version publishing apply false
 }
