@@ -7,6 +7,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.graphics.drawable.toBitmap
 
 /**
  * @author Madray Haven
@@ -18,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 @ReadOnlyComposable
 fun bitmapResource(@DrawableRes id: Int): ImageBitmap {
     val context = LocalContext.current
-    return (context.getDrawable(id) as BitmapDrawable)
-        .bitmap.asImageBitmap()
+    val drawable = context.getDrawable(id)
+        ?: throw IllegalArgumentException("Resource $id not found!")
+    return drawable.toBitmap().asImageBitmap()
 }
