@@ -7,8 +7,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.ViewTreeLifecycleOwner
-import androidx.lifecycle.ViewTreeViewModelStoreOwner
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
@@ -23,18 +23,16 @@ fun OverlayComposeView(context: Context): ComposeView {
     val composeView = ComposeView(context)
     val lifecycle = object : SavedStateRegistryOwner, ViewModelStoreOwner {
         private val lifecycleRegex = LifecycleRegistry(this)
-        override fun getLifecycle(): Lifecycle {
-            return lifecycleRegex
-        }
+        override val lifecycle: Lifecycle
+            get() = lifecycleRegex
         private val savedStateRegistryController =
             SavedStateRegistryController.create(this)
 
         override val savedStateRegistry: SavedStateRegistry
             get() = savedStateRegistryController.savedStateRegistry
         private val mViewModelStore = ViewModelStore()
-        override fun getViewModelStore(): ViewModelStore {
-            return mViewModelStore
-        }
+        override val viewModelStore: ViewModelStore
+            get() = mViewModelStore
 
         fun performRestore(savedState: Bundle?) {
             savedStateRegistryController.performRestore(savedState)
@@ -46,8 +44,8 @@ fun OverlayComposeView(context: Context): ComposeView {
     lifecycle.performRestore(null)
     lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
 
-    ViewTreeLifecycleOwner.set(composeView, lifecycle)
-    ViewTreeViewModelStoreOwner.set(composeView, lifecycle)
+    composeView.setViewTreeLifecycleOwner(lifecycle)
+    composeView.setViewTreeViewModelStoreOwner(lifecycle)
     composeView.setViewTreeSavedStateRegistryOwner(lifecycle)
 
     return composeView

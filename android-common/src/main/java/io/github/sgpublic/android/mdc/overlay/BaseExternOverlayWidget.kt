@@ -5,8 +5,11 @@ import android.app.Activity
 import android.content.Context
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ComponentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.viewbinding.ViewBinding
+import io.github.sgpublic.android.core.util.ContextResource
 import io.github.sgpublic.kotlin.util.Loggable
 
 /**
@@ -16,7 +19,7 @@ import io.github.sgpublic.kotlin.util.Loggable
 abstract class BaseExternOverlayWidget<VB: ViewBinding>
 @RequiresPermission(Manifest.permission.SYSTEM_ALERT_WINDOW) constructor(
     protected val context: Activity,
-): LifecycleOwner, Loggable {
+): LifecycleOwner, Loggable, ContextResource {
 //    protected abstract val ViewBinding: VB
 //    protected val LayoutParams = WindowManager.LayoutParams().also {
 //        it.width = WindowManager.LayoutParams.WRAP_CONTENT
@@ -139,11 +142,17 @@ abstract class BaseExternOverlayWidget<VB: ViewBinding>
 //            it[field.getInt(null)] = field.name
 //        }
 //    }
-//
-//    private val lifecycleOwner: LifecycleRegistry by lazy {
-//        LifecycleRegistry(this)
-//    }
-//    override fun getLifecycle() = lifecycleOwner
+
+    private val lifecycleRegistry by lazy {
+        LifecycleRegistry(this)
+    }
+
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
+
+    override fun getContext(): Context {
+        return context
+    }
 //
 //    companion object {
 //        inline fun <VB: ViewBinding, reified T: BaseOverlayWidget<VB>?> create(context: Context): T {

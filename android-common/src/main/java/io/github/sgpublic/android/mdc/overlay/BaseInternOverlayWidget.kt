@@ -152,9 +152,8 @@ abstract class BaseInternOverlayWidget<VB: ViewBinding> protected constructor(
         LifecycleRegistry(this)
     }
 
-    override fun getLifecycle(): Lifecycle {
-        return lifecycleRegistry
-    }
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
 
     override fun getContext(): Context {
         return context
