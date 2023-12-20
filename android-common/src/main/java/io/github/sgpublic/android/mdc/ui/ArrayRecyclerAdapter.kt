@@ -17,7 +17,7 @@ import java.lang.Integer.max
 abstract class ArrayRecyclerAdapter<VB: ViewBinding, ItemT>(list: Collection<ItemT>? = null):
     RecyclerView.Adapter<ViewBindingHolder<VB>>() {
 
-    private val data: ArrayList<ItemT> = ArrayList<ItemT>().also {
+    protected val data: ArrayList<ItemT> = ArrayList<ItemT>().also {
         it.addAll(list ?: return@also)
     }
     @CallSuper

@@ -14,7 +14,7 @@ import androidx.viewbinding.ViewBinding
  * @date 2022/10/29 10:17
  */
 abstract class ArrayListAdapter<ItemT, VB: ViewBinding>: BaseAdapter() {
-    private val data: ArrayList<ItemT> = ArrayList()
+    protected val data: ArrayList<ItemT> = ArrayList()
     fun setData(list: Collection<ItemT>) {
         this.data.clear()
         this.data.addAll(list)
