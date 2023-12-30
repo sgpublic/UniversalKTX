@@ -14,17 +14,15 @@ class ColoredConverter : CompositeConverter<ILoggingEvent>() {
     }
 
     companion object {
-        private val colored: MutableMap<Level, String> = HashMap()
+        const val FG_END = "\u001B[0m"
         const val FG_TRACE = "\u001B[1;37;1m"
 
-        init {
-            colored[Level.TRACE] = FG_TRACE
-            colored[Level.DEBUG] = "\u001B[1;36;1m"
-            colored[Level.INFO] = "\u001B[1;32;1m"
-            colored[Level.WARN] = "\u001B[1;33;1m"
-            colored[Level.ERROR] = "\u001B[1;31;1m"
-        }
-
-        const val FG_END = "\u001B[0m"
+        private val colored: Map<Level, String> = mapOf(
+            Level.TRACE to FG_TRACE,
+            Level.DEBUG to "\u001B[1;36;1m",
+            Level.INFO to "\u001B[1;32;1m",
+            Level.WARN to "\u001B[1;33;1m",
+            Level.ERROR to "\u001B[1;31;1m",
+        )
     }
 }
