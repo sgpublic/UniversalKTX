@@ -6,6 +6,7 @@ pluginManagement {
         mavenLocal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -17,12 +18,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "UniversalKTX"
 
-include(":kotlin-common")
-include(":kotlin-forest")
-include(":kotlin-logback")
-
-include(":android-mdc")
-include(":android-compose")
-include(":android-common")
-include(":android-logback")
-include(":android-forest")
+include(":uniktx-common")
+include(":uniktx-logback")
+include(":uniktx-forest")
